@@ -14,7 +14,7 @@ function App() {
     return (
         <div>
             <Navbar />
-            <main>
+            <main className="mt-16">
                 <Routes>
                     <Route index path="/rent" element={<RentPage />} />
                 </Routes>
