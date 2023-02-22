@@ -18,7 +18,7 @@ interface CardsPropsType {
     comission?: number;
 }
 
-export default function Cards(props: CardsPropsType) {
+export default function RentCard(props: CardsPropsType) {
     const {
         image,
         title,
@@ -30,11 +30,14 @@ export default function Cards(props: CardsPropsType) {
         comission,
     } = props;
 
-    console.log(comission);
-
     return (
         <Card
-            sx={{ maxWidth: 345, height: "100%", backgroundColor: "#124559" }}
+            sx={{
+                maxWidth: 450,
+                height: "100%",
+                pb: 1,
+                backgroundColor: "#124559",
+            }}
         >
             <CardActionArea>
                 {image !== undefined && (
@@ -80,10 +83,10 @@ export default function Cards(props: CardsPropsType) {
                     color="primary"
                     sx={{
                         color: "white",
-                        backgroundColor: "#AEC3B0",
+                        backgroundColor: "black",
                         border: "none",
                         "&:hover": {
-                            backgroundColor: "#011D27",
+                            backgroundColor: "gray",
                             color: "white",
                             border: "none",
                         },
