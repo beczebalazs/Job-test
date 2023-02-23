@@ -3,6 +3,8 @@ import { useState, ChangeEvent } from "react";
 import { Grid, Pagination } from "@mui/material";
 
 import RentCard from "./components/rent-card/RentCard";
+
+//MOCKData
 import { MockData } from "../../mock-data/MockData";
 
 export default function Rent() {
@@ -63,6 +65,7 @@ export default function Rent() {
                         >
                             <RentCard
                                 key={data.id}
+                                id={data.id}
                                 title={data.title}
                                 description={data.description}
                                 price={data.price}

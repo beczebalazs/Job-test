@@ -1,10 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 import { Button, CardActionArea, CardActions } from "@mui/material";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-
 import ReadMoreIcon from "@mui/icons-material/ReadMore";
 
 interface CardsPropsType {
@@ -16,6 +17,7 @@ interface CardsPropsType {
     city: string;
     address: string;
     comission?: number;
+    id: number;
 }
 
 export default function RentCard(props: CardsPropsType) {
@@ -28,7 +30,14 @@ export default function RentCard(props: CardsPropsType) {
         city,
         address,
         comission,
+        id,
     } = props;
+
+    const navigate = useNavigate();
+
+    function handleReadMoreClick() {
+        navigate(`/rent-detail/${id}`);
+    }
 
     return (
         <Card
@@ -39,7 +48,7 @@ export default function RentCard(props: CardsPropsType) {
                 backgroundColor: "#124559",
             }}
         >
-            <CardActionArea>
+            <CardActionArea onClick={handleReadMoreClick}>
                 {image !== undefined && (
                     <CardMedia
                         component="img"
@@ -81,6 +90,7 @@ export default function RentCard(props: CardsPropsType) {
                     variant="contained"
                     endIcon={<ReadMoreIcon />}
                     color="primary"
+                    onClick={handleReadMoreClick}
                     sx={{
                         color: "white",
                         backgroundColor: "black",

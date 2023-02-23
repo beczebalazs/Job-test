@@ -1,36 +1,35 @@
 import { useState, useRef, MouseEvent } from "react";
+import { useParams } from "react-router-dom";
 
-interface RentDetailPropsType {
-    id: number;
-    image?: string;
-    title: string;
-    description: string;
-    price: number;
-    region: string;
-    city: string;
-    address: string;
-    comission?: number;
-    phone: number;
-    email: string;
-}
+import { Grid } from "@mui/material";
 
-export default function RentDetail(props: RentDetailPropsType) {
-    const {
-        id,
-        title,
-        image,
-        description,
-        price,
-        region,
-        city,
-        address,
-        comission,
-        phone,
-        email,
-    } = props;
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
 
+//MOCKdata
+import { MockData, MockDataPropsType } from "../../mock-data/MockData";
+
+export default function RentDetail() {
     const [isImageOpen, setIsImageOpen] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
+
+    const { id } = useParams<{ id: string }>();
+
+    function getPropertyById(id: number): MockDataPropsType | undefined {
+        return MockData.find((property) => property.id === id);
+    }
+
+    let property;
+    if (id) {
+        const parsedId = parseInt(id);
+        property = getPropertyById(parsedId);
+    }
+
+    if (!property) {
+        return <div>Property not found</div>;
+    }
 
     function handleImageClick() {
         setIsImageOpen(true);
@@ -54,85 +53,34 @@ export default function RentDetail(props: RentDetailPropsType) {
             <header className="p-16 bg-[url('./images/rent-background.jpg')]">
                 <div className="bg-white/75 rounded-lg text-center p-5 flex flex-col m-auto w-fit">
                     <h1 className="text-black text-3xl font-medium mb-1">
-                        {title}
+                        {property.title}
                     </h1>
                 </div>
             </header>
-            <div className="m-10">
-                <div>
-                    <h2 className="text-xl font-medium mb-2 underline">
-                        House description
-                    </h2>
-                    <p>{description}</p>
-                </div>
-                <div>
-                    <h2 className="text-xl font-medium mb-2 underline">
-                        More Details
-                    </h2>
-                    <ul>
-                        <li>
-                            <b>Price:</b> {price} $ / month
-                        </li>
-                        <li>
-                            <b>Region:</b> {region}
-                        </li>
-                        <li>
-                            <b>City:</b> {city}
-                        </li>
-                        <li>
-                            <b>Address:</b> {address}
-                        </li>
-                        {comission !== undefined && (
-                            <li>
-                                <b>Comission:</b> {comission} $
-                            </li>
-                        )}
-                    </ul>
-                </div>
-                <div>
-                    <h2 className="text-xl font-medium mb-2 underline">
-                        Contact details
-                    </h2>
-                    <p>
-                        <b>Phone:</b>{" "}
-                        <a
-                            className="text-midnight-green font-medium"
-                            href={`tel:${phone}`}
-                        >
-                            {phone}
-                        </a>
-                    </p>
-                    <p>
-                        <b>Email:</b>{" "}
-                        <a
-                            className="text-midnight-green font-medium"
-                            href={`mailto:${email}`}
-                        >
-                            {email}
-                        </a>
-                    </p>
-                </div>
-                <div>
-                    {image !== undefined && (
-                        <div>
-                            <h2 className="text-xl font-medium mb-3 underline">
-                                Image
-                            </h2>
-                            <img
-                                src={image}
-                                alt="House"
-                                onClick={handleImageClick}
-                                className="cursor-pointer"
-                            ></img>
-                        </div>
+            <Grid container className="p-10" spacing={4}>
+                <Grid item xs={12} sm={12} md={12} lg={9}>
+                    {property.image !== undefined && (
+                        <img
+                            src={property.image}
+                            alt="House"
+                            onClick={handleImageClick}
+                            className="cursor-pointer"
+                        ></img>
                     )}
                     {isImageOpen && (
                         <div
-                            className="fixed top-0 left-0 w-screen h-screen bg-gray-700 bg-opacity-90 flex justify-center items-center z-10"
+                            className="fixed top-0 left-0 w-screen h-screen bg-black/80 flex justify-center items-center z-10"
                             onClick={handleOutsideClick}
                         >
-                            <div ref={modalRef} className="relative">
-                                <img src={image} alt="House"></img>
+                            <div
+                                ref={modalRef}
+                                className="relative m-auto max-w-[70vw] max-h-[80vh]"
+                            >
+                                <img
+                                    className="max-w-full max-h-full"
+                                    src={property.image}
+                                    alt="House"
+                                ></img>
                                 <button
                                     className="absolute top-0 right-0 m-4 text-white font-bold text-xl"
                                     onClick={handleCloseModal}
@@ -142,8 +90,87 @@ export default function RentDetail(props: RentDetailPropsType) {
                             </div>
                         </div>
                     )}
-                </div>
-            </div>
+                </Grid>
+
+                <Grid item xs={12} sm={12} md={12} lg={3}>
+                    <Card
+                        sx={{
+                            minWidth: 275,
+                            backgroundColor: "#124559",
+                            marginBottom: 3,
+                        }}
+                    >
+                        <CardContent sx={{ color: "white" }}>
+                            <h2 className="text-xl font-medium mb-2 underline">
+                                House description
+                            </h2>
+                            <p>{property.description}</p>
+                        </CardContent>
+                    </Card>
+                    <Card
+                        sx={{
+                            minWidth: 275,
+                            backgroundColor: "#124559",
+                            marginBottom: 3,
+                        }}
+                    >
+                        <CardContent sx={{ color: "white" }}>
+                            <h2 className="text-xl font-medium mb-2 underline">
+                                Price and Location
+                            </h2>
+                            <ul>
+                                <li>
+                                    <b>Price:</b> {property.price} $ / month
+                                </li>
+                                {property.comission !== undefined && (
+                                    <li>
+                                        <b>Comission:</b> {property.comission} $
+                                    </li>
+                                )}
+                                <li>
+                                    <b>Region:</b> {property.region}
+                                </li>
+                                <li>
+                                    <b>City:</b> {property.city}
+                                </li>
+                                <li>
+                                    <b>Address:</b> {property.address}
+                                </li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                    <Card
+                        sx={{
+                            minWidth: 275,
+                            backgroundColor: "#124559",
+                        }}
+                    >
+                        <CardContent sx={{ color: "white" }}>
+                            <h2 className="text-xl font-medium mb-2 underline">
+                                Contact details
+                            </h2>
+                            <p>
+                                <PhoneIcon />{" "}
+                                <a
+                                    className="text-white italic font-medium"
+                                    href={`tel:${property.phone}`}
+                                >
+                                    {property.phone}
+                                </a>
+                            </p>
+                            <p>
+                                <EmailIcon />{" "}
+                                <a
+                                    className="text-white italic font-medium"
+                                    href={`mailto:${property.email}`}
+                                >
+                                    {property.email}
+                                </a>
+                            </p>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
         </div>
     );
 }

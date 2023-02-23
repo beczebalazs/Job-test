@@ -1,4 +1,4 @@
-interface MockDataPropsType {
+export interface MockDataPropsType {
     id: number;
     image?: string;
     title: string;
