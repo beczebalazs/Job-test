@@ -1,8 +1,6 @@
 import {
     Box,
     Button,
-    Card,
-    CardContent,
     Checkbox,
     FormControlLabel,
     Grid,
@@ -13,6 +11,7 @@ import {
 import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import ImageScroller from "../utils/imageScroller/ImageScroller";
 
 const LoginForm = () => {
     return (
@@ -23,14 +22,9 @@ const LoginForm = () => {
                     xs={false}
                     sm={4}
                     md={7}
-                    sx={{
-                        backgroundImage:
-                            "url(https://source.unsplash.com/random)",
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                    }}
-                />
+                >
+                    <ImageScroller/>
+                </Grid>
                 <Grid item xs={12} sm={8} md={5} component={Paper} square>
                     <Box
                         sx={{
