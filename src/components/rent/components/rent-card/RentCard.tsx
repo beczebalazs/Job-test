@@ -1,10 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 import { Button, CardActionArea, CardActions } from "@mui/material";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-
 import ReadMoreIcon from "@mui/icons-material/ReadMore";
 
 interface CardsPropsType {
@@ -16,9 +17,10 @@ interface CardsPropsType {
     city: string;
     address: string;
     comission?: number;
+    id: number;
 }
 
-export default function Cards(props: CardsPropsType) {
+export default function RentCard(props: CardsPropsType) {
     const {
         image,
         title,
@@ -28,15 +30,25 @@ export default function Cards(props: CardsPropsType) {
         city,
         address,
         comission,
+        id,
     } = props;
 
-    console.log(comission);
+    const navigate = useNavigate();
+
+    function handleReadMoreClick() {
+        navigate(`/rent-detail/${id}`);
+    }
 
     return (
         <Card
-            sx={{ maxWidth: 345, height: "100%", backgroundColor: "#124559" }}
+            sx={{
+                maxWidth: 450,
+                height: "100%",
+                pb: 1,
+                backgroundColor: "#124559",
+            }}
         >
-            <CardActionArea>
+            <CardActionArea onClick={handleReadMoreClick}>
                 {image !== undefined && (
                     <CardMedia
                         component="img"
@@ -78,12 +90,13 @@ export default function Cards(props: CardsPropsType) {
                     variant="contained"
                     endIcon={<ReadMoreIcon />}
                     color="primary"
+                    onClick={handleReadMoreClick}
                     sx={{
                         color: "white",
-                        backgroundColor: "#AEC3B0",
+                        backgroundColor: "black",
                         border: "none",
                         "&:hover": {
-                            backgroundColor: "#011D27",
+                            backgroundColor: "gray",
                             color: "white",
                             border: "none",
                         },

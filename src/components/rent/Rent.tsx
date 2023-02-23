@@ -2,7 +2,9 @@ import { useState, ChangeEvent } from "react";
 
 import { Grid, Pagination } from "@mui/material";
 
-import Cards from "../../components/cards/Cards";
+import RentCard from "./components/rent-card/RentCard";
+
+//MOCKData
 import { MockData } from "../../mock-data/MockData";
 
 export default function Rent() {
@@ -28,15 +30,17 @@ export default function Rent() {
 
     return (
         <div>
-            <header className="p-20 text-center bg-lake-blue flex flex-col justify-center">
-                <h1 className="text-white text-3xl font-medium mb-5">
-                    Do you want to rent an apartment?
-                </h1>
-                <h2 className="text-white text-xl font-medium">
-                    You are at the right place!
-                </h2>
+            <header className="p-16 bg-[url('./images/rent-background.jpg')]">
+                <div className="bg-white/75 rounded-lg text-center p-5 flex flex-col m-auto w-fit">
+                    <h1 className="text-black text-3xl font-medium mb-1">
+                        Do you want to rent an apartment?
+                    </h1>
+                    <h2 className="text-black text-xl font-medium">
+                        You are at the right place!
+                    </h2>
+                </div>
             </header>
-            <div className="mx-10 my-5">
+            <div className="pt-8 pb-4 mx-10 my-5">
                 <input
                     type="text"
                     placeholder="Search by Title or Description"
@@ -45,7 +49,7 @@ export default function Rent() {
                     className="border rounded px-2 py-1 w-full"
                 />
             </div>
-            <Grid container spacing={2}>
+            <Grid className="pr-3 pl-3" container spacing={2}>
                 {filteredData
                     .slice(
                         (currentPage - 1) * itemsPerPage,
@@ -59,8 +63,9 @@ export default function Rent() {
                             md={4}
                             className="flex justify-center items-center"
                         >
-                            <Cards
+                            <RentCard
                                 key={data.id}
+                                id={data.id}
                                 title={data.title}
                                 description={data.description}
                                 price={data.price}
