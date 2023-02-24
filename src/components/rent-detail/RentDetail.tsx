@@ -50,14 +50,12 @@ export default function RentDetail() {
 
     return (
         <div>
-            <header className="p-16 bg-[url('./images/rent-background.jpg')]">
-                <div className="bg-white/75 rounded-lg text-center p-5 flex flex-col m-auto w-fit">
-                    <h1 className="text-black text-3xl font-medium mb-1">
-                        {property.title}
-                    </h1>
-                </div>
+            <header className="p-8 text-left ml-2">
+                <h1 className="text-black text-3xl font-medium mb-1">
+                    {property.title}
+                </h1>
             </header>
-            <Grid container className="p-10" spacing={4}>
+            <Grid container className="p-10 pt-0" spacing={4}>
                 <Grid item xs={12} sm={12} md={12} lg={9}>
                     {property.image !== undefined && (
                         <img
@@ -90,31 +88,31 @@ export default function RentDetail() {
                             </div>
                         </div>
                     )}
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={12} lg={3}>
                     <Card
                         sx={{
                             minWidth: 275,
-                            backgroundColor: "#124559",
-                            marginBottom: 3,
+                            backgroundColor: "white",
+                            marginTop: 3,
                         }}
                     >
-                        <CardContent sx={{ color: "white" }}>
+                        <CardContent sx={{ color: "black" }}>
                             <h2 className="text-xl font-medium mb-2 underline">
                                 House description
                             </h2>
                             <p>{property.description}</p>
                         </CardContent>
                     </Card>
+                </Grid>
+
+                <Grid item xs={12} sm={12} md={12} lg={3}>
                     <Card
                         sx={{
                             minWidth: 275,
-                            backgroundColor: "#124559",
+                            backgroundColor: "white",
                             marginBottom: 3,
                         }}
                     >
-                        <CardContent sx={{ color: "white" }}>
+                        <CardContent sx={{ color: "black" }}>
                             <h2 className="text-xl font-medium mb-2 underline">
                                 Price and Location
                             </h2>
@@ -142,17 +140,17 @@ export default function RentDetail() {
                     <Card
                         sx={{
                             minWidth: 275,
-                            backgroundColor: "#124559",
+                            backgroundColor: "white",
                         }}
                     >
-                        <CardContent sx={{ color: "white" }}>
+                        <CardContent sx={{ color: "black" }}>
                             <h2 className="text-xl font-medium mb-2 underline">
                                 Contact details
                             </h2>
                             <p>
                                 <PhoneIcon />{" "}
                                 <a
-                                    className="text-white italic font-medium"
+                                    className="text-black italic font-medium"
                                     href={`tel:${property.phone}`}
                                 >
                                     {property.phone}
@@ -161,7 +159,7 @@ export default function RentDetail() {
                             <p>
                                 <EmailIcon />{" "}
                                 <a
-                                    className="text-white italic font-medium"
+                                    className="text-black italic font-medium"
                                     href={`mailto:${property.email}`}
                                 >
                                     {property.email}

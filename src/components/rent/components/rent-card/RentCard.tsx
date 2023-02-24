@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
 
-import { Button, CardActionArea, CardActions } from "@mui/material";
+import { CardActionArea } from "@mui/material";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import ReadMoreIcon from "@mui/icons-material/ReadMore";
 
 interface CardsPropsType {
     image?: string;
@@ -44,8 +43,11 @@ export default function RentCard(props: CardsPropsType) {
             sx={{
                 maxWidth: 450,
                 height: "100%",
-                pb: 1,
-                backgroundColor: "#124559",
+                p: 1.5,
+                pb: 0,
+                backgroundColor: "white",
+                borderRadius: 3,
+                border: "2px solid gray",
             }}
         >
             <CardActionArea onClick={handleReadMoreClick}>
@@ -55,56 +57,29 @@ export default function RentCard(props: CardsPropsType) {
                         height="345"
                         image={image}
                         alt="Image"
-                        sx={{ objectFit: "cover" }}
+                        sx={{ objectFit: "cover", borderRadius: 3 }}
                     />
                 )}
 
-                <CardContent>
-                    <Typography
-                        gutterBottom
-                        color="white"
-                        variant="h5"
-                        component="div"
-                    >
+                <CardContent color="black">
+                    <Typography variant="h5" component="div">
                         {title}
                     </Typography>
-                    <Typography variant="body2" color="white">
-                        {description.slice(0, 50)}...
-                    </Typography>
-                    <Typography variant="body2" color="white">
-                        Price: {price} $ / month
-                    </Typography>
-                    {comission !== undefined && (
-                        <Typography variant="body2" color="white">
-                            Comission: {comission} $
-                        </Typography>
-                    )}
-                    <Typography variant="body2" color="white">
+                    <Typography variant="body2">
                         {region}, {city}, {address}
+                    </Typography>
+                    <Typography
+                        variant="body2"
+                        sx={{
+                            fontWeight: "bold",
+                            fontSize: 25,
+                            marginTop: "15px",
+                        }}
+                    >
+                        {price} $ / month
                     </Typography>
                 </CardContent>
             </CardActionArea>
-            <CardActions>
-                <Button
-                    size="small"
-                    variant="contained"
-                    endIcon={<ReadMoreIcon />}
-                    color="primary"
-                    onClick={handleReadMoreClick}
-                    sx={{
-                        color: "white",
-                        backgroundColor: "black",
-                        border: "none",
-                        "&:hover": {
-                            backgroundColor: "gray",
-                            color: "white",
-                            border: "none",
-                        },
-                    }}
-                >
-                    Read More
-                </Button>
-            </CardActions>
         </Card>
     );
 }
