@@ -16,14 +16,16 @@ import ImageScroller from "../utils/imageScroller/ImageScroller";
 const LoginForm = () => {
     return (
         <>
+            <style>
+                {`
+            html, body {
+                overflow: hidden;
+            }
+        `}
+            </style>
             <Grid container sx={{ height: "100vh" }}>
-                <Grid
-                    item
-                    xs={false}
-                    sm={4}
-                    md={7}
-                >
-                    <ImageScroller/>
+                <Grid item xs={false} sm={4} md={7}>
+                    <ImageScroller />
                 </Grid>
                 <Grid item xs={12} sm={8} md={5} component={Paper} square>
                     <Box
@@ -87,14 +89,12 @@ const LoginForm = () => {
                                 </Button>
                             </Box>
                             <Grid container>
-                                    <Grid item xs>
-                                        <Link>Forgot password?</Link>
-                                    </Grid>
-                                    <Grid item>
-                                        <Link>
-                                            Don't have an account? Sign Up
-                                        </Link>
-                                    </Grid>
+                                <Grid item xs>
+                                    <Link>Forgot password?</Link>
+                                </Grid>
+                                <Grid item>
+                                    <Link>Don't have an account? Sign Up</Link>
+                                </Grid>
                             </Grid>
                         </Box>
                     </Box>
