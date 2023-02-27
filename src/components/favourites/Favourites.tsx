@@ -2,13 +2,13 @@ import { useState, ChangeEvent } from "react";
 
 import { Grid, Pagination } from "@mui/material";
 
-import RentCard from "./components/rent-card/RentCard";
+import RentCard from "../rent/components/rent-card/RentCard";
 
 //Mock data
 import { MockData } from "../../mock-data/MockData";
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
-import PropertySearchbar from "./components/searchbars/PropertySearchbar";
+import PropertySearchbar from "../rent/components/searchbars/PropertySearchbar";
 import TextCheckboxFilter from "../filters/TextCheckboxFilter";
 import CheckboxFilter from "../filters/CheckboxFilter";
 
@@ -46,12 +46,7 @@ export default function Rent() {
                         <Typography
                             sx={{ fontWeight: 700, fontSize: "2.25rem" }}
                         >
-                            Rent a house
-                        </Typography>
-                        <Typography
-                            sx={{ fontWeight: 500, fontSize: "1rem", pl: 0.2 }}
-                        >
-                            More than 1000 results
+                            Favourites
                         </Typography>
                         <div className="pt-6 flex ">
                             <PropertySearchbar
@@ -61,51 +56,7 @@ export default function Rent() {
                             />
                         </div>
                     </Grid>
-                    <Grid item md={2} sx={{ pt: 2, pr: 4 }}>
-                        <div className="pb-5">
-                            <CheckboxFilter
-                                title="Price"
-                                options={[
-                                    "0 - 100",
-                                    "100 - 200",
-                                    "300 - 400",
-                                    "400 - 500",
-                                    "500+",
-                                ]}
-                            />
-                        </div>
-                        <div className="pb-5">
-                            <TextCheckboxFilter
-                                title="City"
-                                options={[
-                                    "Targu Mures",
-                                    "Gheorgheni",
-                                    "Taktaharkány",
-                                    "Cluj-Napoca",
-                                    "Miercurea Ciuc",
-                                    "Sovata",
-                                    "Bucuresti",
-                                    "Tusnádfürdő",
-                                    "Marosfő",
-                                    "Alfalu",
-                                    "Mittudjamen mi",
-                                ]}
-                            />
-                        </div>
-                        <div>
-                            <TextCheckboxFilter
-                                title="Region"
-                                options={[
-                                    "Harghita",
-                                    "Mures",
-                                    "Covasna",
-                                    "Brasov",
-                                    "Braila",
-                                    "Ilfov",
-                                ]}
-                            />
-                        </div>
-                    </Grid>
+                    <Grid item md={2} sx={{ pt: 2, pr: 4 }}></Grid>
                     <Grid container md={10} sx={{ pt: 2, pb: 4 }} spacing={3}>
                         {filteredData
                             .slice(

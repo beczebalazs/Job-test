@@ -5,7 +5,7 @@ import {
     Paper,
     Typography,
 } from "@mui/material";
-import FilterSearchbar from "../rent/components/property-searchbar/FilterSearchbar";
+import FilterSearchbar from "../rent/components/searchbars/FilterSearchbar";
 import { checkboxStyle } from "../utils/checkboxStyle/checkboxStyle";
 
 interface TextCheckboxFilterProps {
