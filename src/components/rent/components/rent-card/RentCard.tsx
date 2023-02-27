@@ -1,11 +1,8 @@
 import { useNavigate } from "react-router-dom";
-
-import { CardActionArea } from "@mui/material";
-
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import { Grid } from "@mui/material";
+import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 
 interface CardsPropsType {
     image?: string;
@@ -20,17 +17,7 @@ interface CardsPropsType {
 }
 
 export default function RentCard(props: CardsPropsType) {
-    const {
-        image,
-        title,
-        description,
-        price,
-        region,
-        city,
-        address,
-        comission,
-        id,
-    } = props;
+    const { image, title, price, region, city, address, id } = props;
 
     const navigate = useNavigate();
 
@@ -39,47 +26,46 @@ export default function RentCard(props: CardsPropsType) {
     }
 
     return (
-        <Card
-            sx={{
-                maxWidth: 450,
-                height: "100%",
-                p: 1.5,
-                pb: 0,
-                backgroundColor: "white",
-                borderRadius: 3,
-                border: "2px solid gray",
-            }}
-        >
-            <CardActionArea onClick={handleReadMoreClick}>
+        <div className="hover:cursor-pointer">
+            <Paper
+                elevation={8}
+                sx={{
+                    display: "flex",
+                    px: 2.8,
+                    pt: 2,
+                    flexDirection: "column",
+                    borderRadius: "5px",
+                }}
+                onClick={handleReadMoreClick}
+            >
                 {image !== undefined && (
-                    <CardMedia
-                        component="img"
-                        height="345"
-                        image={image}
-                        alt="Image"
-                        sx={{ objectFit: "cover", borderRadius: 3 }}
-                    />
+                    <img src={image} alt="" className="rounded" />
                 )}
-
-                <CardContent color="black">
-                    <Typography variant="h5" component="div">
-                        {title}
-                    </Typography>
-                    <Typography variant="body2">
-                        {region}, {city}, {address}
-                    </Typography>
-                    <Typography
-                        variant="body2"
-                        sx={{
-                            fontWeight: "bold",
-                            fontSize: 25,
-                            marginTop: "15px",
-                        }}
-                    >
-                        {price} $ / month
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-        </Card>
+                <Grid sx={{ pt: 1 }}>
+                    <div>
+                        <Typography
+                            sx={{ fontWeight: 500, fontSize: "1.5rem" }}
+                        >
+                            {title}
+                        </Typography>
+                        <Typography sx={{ fontWeight: 300, lineHeight: 1 }}>
+                            {region}, {city}, {address}
+                        </Typography>
+                    </div>
+                    <div className="pt-6 pb-2 flex justify-between">
+                        <Typography
+                            sx={{ fontWeight: 800, fontSize: "1.8rem" }}
+                        >
+                            {price} € / month
+                        </Typography>
+                        <div>
+                            <StarBorderOutlinedIcon
+                                sx={{ fontSize: "2.8rem" }}
+                            />
+                        </div>
+                    </div>
+                </Grid>
+            </Paper>
+        </div>
     );
 }
