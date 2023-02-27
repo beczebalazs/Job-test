@@ -16,7 +16,7 @@ export default function Navbar() {
                     <Link to="/rent" className="hover:text-gray">
                         Rent a House
                     </Link>
-                    <Link to="/favorite" className="hover:text-gray">
+                    <Link to="/favorites" className="hover:text-gray">
                         Favorite
                     </Link>
                 </div>

@@ -7,6 +7,7 @@ import RentDetail from "./components/rent-detail/RentDetail";
 import Login from "./components/login/Login";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "./theme";
+import Favourites from "./components/favourites/Favourites";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                             element={<RentDetail />}
                         />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/favorites" element={<Favourites />} />
                     </Routes>
                 </main>
             </ThemeProvider>
