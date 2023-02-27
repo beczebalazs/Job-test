@@ -8,7 +8,7 @@ import RentCard from "./components/rent-card/RentCard";
 import { MockData } from "../../mock-data/MockData";
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
-import PropertySearchbar from "./components/property-searchbar/PropertySearchbar";
+import PropertySearchbar from "./components/searchbars/PropertySearchbar";
 import TextCheckboxFilter from "../filters/TextCheckboxFilter";
 import CheckboxFilter from "../filters/CheckboxFilter";
 
