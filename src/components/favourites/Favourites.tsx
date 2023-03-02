@@ -9,8 +9,6 @@ import { MockData } from "../../mock-data/MockData";
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import PropertySearchbar from "../rent/components/searchbars/PropertySearchbar";
-import TextCheckboxFilter from "../filters/TextCheckboxFilter";
-import CheckboxFilter from "../filters/CheckboxFilter";
 
 export default function Rent() {
     const [searchTerm, setSearchTerm] = useState("");
