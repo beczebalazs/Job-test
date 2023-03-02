@@ -1,16 +1,16 @@
 import { useState, ChangeEvent } from "react";
 
 import { Grid, Pagination } from "@mui/material";
+import { Box } from "@mui/system";
 
 import RentCard from "./components/rent-card/RentCard";
-
-//Mock data
-import { MockData } from "../../mock-data/MockData";
-import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import PropertySearchbar from "./components/searchbars/PropertySearchbar";
 import TextCheckboxFilter from "../filters/TextCheckboxFilter";
 import CheckboxFilter from "../filters/CheckboxFilter";
+
+//Mock data
+import { MockData } from "../../mock-data/MockData";
 
 export default function Rent() {
     const [searchTerm, setSearchTerm] = useState("");

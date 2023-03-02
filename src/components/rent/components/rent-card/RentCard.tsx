@@ -1,22 +1,13 @@
 import { useNavigate } from "react-router-dom";
+
+import { Grid } from "@mui/material";
+import { RentType } from "../../../../types/RentType";
+
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { Grid } from "@mui/material";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 
-interface CardsPropsType {
-    image?: string;
-    title: string;
-    description: string;
-    price: number;
-    region: string;
-    city: string;
-    address: string;
-    comission?: number;
-    id: number;
-}
-
-export default function RentCard(props: CardsPropsType) {
+export default function RentCard(props: RentType) {
     const { image, title, price, region, city, address, id } = props;
 
     const navigate = useNavigate();

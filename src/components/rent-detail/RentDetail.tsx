@@ -2,6 +2,7 @@ import { useState, useRef, MouseEvent } from "react";
 import { useParams } from "react-router-dom";
 
 import { Grid } from "@mui/material";
+import { RentType } from "../../types/RentType";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -9,7 +10,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 
 //MOCKdata
-import { MockData, MockDataPropsType } from "../../mock-data/MockData";
+import { MockData } from "../../mock-data/MockData";
 
 export default function RentDetail() {
     const [isImageOpen, setIsImageOpen] = useState(false);
@@ -17,7 +18,7 @@ export default function RentDetail() {
 
     const { id } = useParams<{ id: string }>();
 
-    function getPropertyById(id: number): MockDataPropsType | undefined {
+    function getPropertyById(id: number): RentType | undefined {
         return MockData.find((property) => property.id === id);
     }
 
