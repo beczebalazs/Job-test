@@ -1,22 +1,34 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
+import { selectAllRealEstates } from "../../store/realEstates.selector";
+import { fetchRealEstates } from "../../store/realEstates.action";
 import { Grid, Pagination } from "@mui/material";
 import { Box } from "@mui/system";
+import { AsyncDispatch } from "../../store/store";
 
 import RentCard from "./components/rent-card/RentCard";
 import Typography from "@mui/material/Typography";
 import PropertySearchbar from "./components/searchbars/PropertySearchbar";
 import TextCheckboxFilter from "../filters/TextCheckboxFilter";
 import CheckboxFilter from "../filters/CheckboxFilter";
-
-//Mock data
-import { MockData } from "../../mock-data/MockData";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Rent() {
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [loading, setLoading] = useState(false);
 
     const itemsPerPage = 15;
+
+    const dispatch: AsyncDispatch = useDispatch();
+
+    useEffect(() => {
+        setLoading(true);
+        dispatch(fetchRealEstates()).then(() => setLoading(false));
+    }, [dispatch]);
+
+    const realEstates = useSelector(selectAllRealEstates);
 
     const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value);
@@ -31,113 +43,138 @@ export default function Rent() {
         setCurrentPage(1);
     };
 
-    const filteredData = MockData.filter(
+    const filteredData = realEstates.filter(
         (item) =>
             item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    return (
-        <div>
-            <Box sx={{ mx: 20, pt: 10 }}>
-                <Grid container>
-                    <Grid item md={2} />
-                    <Grid item md={10}>
-                        <Typography
-                            sx={{ fontWeight: 700, fontSize: "2.25rem" }}
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <CircularProgress
+                    sx={{
+                        color: "gray",
+                    }}
+                ></CircularProgress>
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                <Box sx={{ mx: 20, pt: 10 }}>
+                    <Grid container>
+                        <Grid item md={2} />
+                        <Grid item md={10}>
+                            <Typography
+                                sx={{ fontWeight: 700, fontSize: "2.25rem" }}
+                            >
+                                Rent a house
+                            </Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: 500,
+                                    fontSize: "1rem",
+                                    pl: 0.2,
+                                }}
+                            >
+                                More than {filteredData.length} results
+                            </Typography>
+                            <div className="pt-6 flex ">
+                                <PropertySearchbar
+                                    placeholder="Search..."
+                                    value={searchTerm}
+                                    onChange={handleSearchChange}
+                                />
+                            </div>
+                        </Grid>
+                        <Grid item md={2} sx={{ pt: 2, pr: 4 }}>
+                            <div className="pb-5">
+                                <CheckboxFilter
+                                    title="Price"
+                                    options={[
+                                        "0 - 100",
+                                        "100 - 200",
+                                        "300 - 400",
+                                        "400 - 500",
+                                        "500+",
+                                    ]}
+                                />
+                            </div>
+                            <div className="pb-5">
+                                <TextCheckboxFilter
+                                    title="City"
+                                    options={[
+                                        "Targu Mures",
+                                        "Gheorgheni",
+                                        "Taktaharkány",
+                                        "Cluj-Napoca",
+                                        "Miercurea Ciuc",
+                                        "Sovata",
+                                        "Bucuresti",
+                                        "Tusnádfürdő",
+                                        "Marosfő",
+                                        "Alfalu",
+                                        "Mittudjamen mi",
+                                    ]}
+                                />
+                            </div>
+                            <div>
+                                <TextCheckboxFilter
+                                    title="Region"
+                                    options={[
+                                        "Harghita",
+                                        "Mures",
+                                        "Covasna",
+                                        "Brasov",
+                                        "Braila",
+                                        "Ilfov",
+                                    ]}
+                                />
+                            </div>
+                        </Grid>
+                        <Grid
+                            container
+                            md={10}
+                            sx={{ pt: 2, pb: 4 }}
+                            spacing={3}
                         >
-                            Rent a house
-                        </Typography>
-                        <Typography
-                            sx={{ fontWeight: 500, fontSize: "1rem", pl: 0.2 }}
-                        >
-                            More than 1000 results
-                        </Typography>
-                        <div className="pt-6 flex ">
-                            <PropertySearchbar
-                                placeholder="Search..."
-                                value={searchTerm}
-                                onChange={handleSearchChange}
-                            />
-                        </div>
+                            {filteredData
+                                .slice(
+                                    (currentPage - 1) * itemsPerPage,
+                                    currentPage * itemsPerPage
+                                )
+                                .map((data) => (
+                                    <Grid item md={4}>
+                                        <RentCard
+                                            key={data.id}
+                                            id={data.id}
+                                            title={data.title}
+                                            description={data.description}
+                                            price={data.price}
+                                            region={data.region}
+                                            city={data.city}
+                                            address={data.address}
+                                            image={data.image}
+                                            comission={data.comission}
+                                        />
+                                    </Grid>
+                                ))}
+                        </Grid>
                     </Grid>
-                    <Grid item md={2} sx={{ pt: 2, pr: 4 }}>
-                        <div className="pb-5">
-                            <CheckboxFilter
-                                title="Price"
-                                options={[
-                                    "0 - 100",
-                                    "100 - 200",
-                                    "300 - 400",
-                                    "400 - 500",
-                                    "500+",
-                                ]}
-                            />
-                        </div>
-                        <div className="pb-5">
-                            <TextCheckboxFilter
-                                title="City"
-                                options={[
-                                    "Targu Mures",
-                                    "Gheorgheni",
-                                    "Taktaharkány",
-                                    "Cluj-Napoca",
-                                    "Miercurea Ciuc",
-                                    "Sovata",
-                                    "Bucuresti",
-                                    "Tusnádfürdő",
-                                    "Marosfő",
-                                    "Alfalu",
-                                    "Mittudjamen mi",
-                                ]}
-                            />
-                        </div>
-                        <div>
-                            <TextCheckboxFilter
-                                title="Region"
-                                options={[
-                                    "Harghita",
-                                    "Mures",
-                                    "Covasna",
-                                    "Brasov",
-                                    "Braila",
-                                    "Ilfov",
-                                ]}
-                            />
-                        </div>
-                    </Grid>
-                    <Grid container md={10} sx={{ pt: 2, pb: 4 }} spacing={3}>
-                        {filteredData
-                            .slice(
-                                (currentPage - 1) * itemsPerPage,
-                                currentPage * itemsPerPage
-                            )
-                            .map((data) => (
-                                <Grid item md={4}>
-                                    <RentCard
-                                        key={data.id}
-                                        id={data.id}
-                                        title={data.title}
-                                        description={data.description}
-                                        price={data.price}
-                                        region={data.region}
-                                        city={data.city}
-                                        address={data.address}
-                                        image={data.image}
-                                        comission={data.comission}
-                                    />
-                                </Grid>
-                            ))}
-                    </Grid>
-                </Grid>
-                <Pagination
-                    count={Math.ceil(filteredData.length / itemsPerPage)}
-                    page={currentPage}
-                    shape="rounded"
-                    onChange={handlePageChange}
-                    sx={{ display: "flex", justifyContent: "center", my: 5 }}
-                />
-            </Box>
-        </div>
-    );
+                    <Pagination
+                        count={Math.ceil(filteredData.length / itemsPerPage)}
+                        page={currentPage}
+                        shape="rounded"
+                        onChange={handlePageChange}
+                        sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            my: 5,
+                        }}
+                    />
+                </Box>
+            </div>
+        );
+    }
 }
