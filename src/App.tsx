@@ -8,26 +8,30 @@ import Login from "./components/login/Login";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "./theme";
 import Favourites from "./components/favourites/Favourites";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 function App() {
     return (
-        <div>
-            <ThemeProvider theme={theme}>
-                <Navbar />
-                <main className="mt-16">
-                    <Routes>
-                        <Route index element={<Home />} />
-                        <Route path="/rent" element={<Rent />} />
-                        <Route
-                            path="/rent-detail/:id"
-                            element={<RentDetail />}
-                        />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/favorites" element={<Favourites />} />
-                    </Routes>
-                </main>
-            </ThemeProvider>
-        </div>
+        <Provider store={store}>
+            <div>
+                <ThemeProvider theme={theme}>
+                    <Navbar />
+                    <main className="mt-16">
+                        <Routes>
+                            <Route index element={<Home />} />
+                            <Route path="/rent" element={<Rent />} />
+                            <Route
+                                path="/rent-detail/:id"
+                                element={<RentDetail />}
+                            />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/favorites" element={<Favourites />} />
+                        </Routes>
+                    </main>
+                </ThemeProvider>
+            </div>
+        </Provider>
     );
 }
 

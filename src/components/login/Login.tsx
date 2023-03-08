@@ -12,8 +12,34 @@ import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ImageScroller from "../utils/imageScroller/ImageScroller";
+import { userLogin } from "../../features/auth/authSlice";
+import { LoginRequestType } from "../../types/login/LoginRequestType";
+import { useAppDispatch } from "../../hooks/useTypedSelector";
+import React, { useState } from "react";
 
 const LoginForm = () => {
+    const dispatch = useAppDispatch();
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    const credentials: LoginRequestType = {
+        username: username,
+        password: password,
+    };
+
+    const testApiCall = () => {
+        dispatch(userLogin(credentials));
+    };
+
+    const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setUsername(e.currentTarget.value)
+    }
+
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setPassword(e.currentTarget.value);
+    }
+
     return (
         <>
             <style>
@@ -53,11 +79,12 @@ const LoginForm = () => {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="email"
-                                label="Email Address"
+                                id="username"
+                                label="Username"
                                 name="email"
                                 autoComplete="email"
                                 autoFocus
+                                onChange={handleUsernameChange}
                             />
                             <TextField
                                 margin="normal"
@@ -68,6 +95,7 @@ const LoginForm = () => {
                                 name="password"
                                 type="password"
                                 autoComplete="current-password"
+                                onChange={handlePasswordChange}
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" />}
@@ -80,10 +108,10 @@ const LoginForm = () => {
                                 }}
                             >
                                 <Button
-                                    type="submit"
                                     fullWidth
                                     variant="contained"
                                     sx={{ mt: 3, mb: 2, width: "50%" }}
+                                    onClick={testApiCall}
                                 >
                                     Login
                                 </Button>
