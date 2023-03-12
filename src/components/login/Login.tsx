@@ -1,134 +1,146 @@
-import {
-    Box,
-    Button,
-    Checkbox,
-    FormControlLabel,
-    Grid,
-    Link,
-    TextField,
-    Typography,
-} from "@mui/material";
-import Avatar from "@mui/material/Avatar";
+import { Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import ImageScroller from "../utils/imageScroller/ImageScroller";
+import BasicInput from "../inputField/basicInput/BasicInput";
+import Button from "@mui/material/Button";
+import React, { ChangeEvent, useState } from "react";
+import constants from "../../constants/constants";
 import { userLogin } from "../../features/auth/authSlice";
 import { LoginRequestType } from "../../types/login/LoginRequestType";
-import { useAppDispatch } from "../../hooks/useTypedSelector";
-import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/useTypedSelector";
+import { RootState } from "../../store";
+import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
+import { InputStatesEnum } from "../../enums/InputStatesEnum";
 
 const LoginForm = () => {
     const dispatch = useAppDispatch();
 
+    const isLoading = useAppSelector((state: RootState) => state.auth.loading);
+    const errorMessage = useAppSelector((state: RootState) => state.auth.error);
+    const userToken = useAppSelector(
+        (state: RootState) => state.auth.userToken
+    );
+
+    const [usernameError, setUsernameError] = useState<InputStatesEnum>(
+        InputStatesEnum.Initial
+    );
+    const [passwordError, setPasswordError] = useState<InputStatesEnum>(
+        InputStatesEnum.Initial
+    );
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const credentials: LoginRequestType = {
-        username: username,
-        password: password,
+    let credentials: LoginRequestType = {
+        username: "",
+        password: "",
     };
 
-    const testApiCall = () => {
-        dispatch(userLogin(credentials));
+    const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setUsername(e.target.value);
     };
 
-    const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setUsername(e.currentTarget.value)
-    }
+    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+    };
 
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setPassword(e.currentTarget.value);
+    const handleSubmit = () => {
+        username === ""
+            ? setUsernameError(InputStatesEnum.Invalid)
+            : setUsernameError(InputStatesEnum.Valid);
+        password === ""
+            ? setPasswordError(InputStatesEnum.Invalid)
+            : setPasswordError(InputStatesEnum.Valid);
+
+        if (
+            usernameError === InputStatesEnum.Valid &&
+            passwordError === InputStatesEnum.Valid
+        ) {
+            credentials.username = username;
+            credentials.password = password;
+            dispatch(userLogin(credentials));
+        }
+    };
+
+    let errorAlert;
+
+    if (errorMessage === "Request failed with status code 401") {
+        errorAlert = (
+            <Alert severity="error" sx={{ mb: 2 }}>
+                Username or password is incorrect
+            </Alert>
+        );
+    } else if (
+        errorMessage !== null &&
+        errorMessage !== "Request failed with status code 401"
+    ) {
+        errorAlert = (
+            <Alert severity="error" sx={{ mb: 2 }}>
+                An unknown error occured
+            </Alert>
+        );
     }
 
     return (
-        <>
-            <style>
-                {`
-            html, body {
-                overflow: hidden;
-            }
-        `}
-            </style>
-            <Grid container sx={{ height: "100vh" }}>
-                <Grid item xs={false} sm={4} md={7}>
-                    <ImageScroller />
-                </Grid>
-                <Grid item xs={12} sm={8} md={5} component={Paper} square>
-                    <Box
-                        sx={{
-                            my: 8,
-                            mx: 4,
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                        }}
+        <div className="flex items-center justify-center h-screen">
+            <Paper
+                elevation={8}
+                sx={{
+                    width: "fit-content",
+                    py: 3,
+                    px: 5,
+                    borderRadius: 2,
+                    marginBottom: "150px",
+                    minWidth: "20%",
+                }}
+            >
+                <Typography
+                    sx={{
+                        fontWeight: 500,
+                        fontSize: "xx-large",
+                        display: "flex",
+                        justifyContent: "center",
+                        pb: 2,
+                    }}
+                >
+                    Login
+                </Typography>
+                {userToken !== null && (
+                    <Alert severity="success" sx={{ mb: 2 }}>
+                        Login successful
+                    </Alert>
+                )}
+                {errorAlert}
+                <div className="pb-5">
+                    <BasicInput
+                        type="username"
+                        placeholder="Username"
+                        onChange={handleUsernameChange}
+                        error={usernameError}
+                        helperText="Username is required"
+                    />
+                </div>
+                <div className="pb-8">
+                    <BasicInput
+                        type="password"
+                        placeholder="Password"
+                        onChange={handlePasswordChange}
+                        error={passwordError}
+                        helperText="Password is required"
+                    />
+                </div>
+                <div className="flex justify-center">
+                    <Button
+                        variant="contained"
+                        sx={{ backgroundColor: constants.MAIN_COLOR }}
+                        onClick={handleSubmit}
+                        // when pressing enter prevent default and handle submit needs to be implemented
                     >
-                        <Avatar sx={{ m: 1, bgcolor: "#6290C8" }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
-                        <Typography component="h1" variant="h5">
-                            Login
-                        </Typography>
-                        <Box
-                            component="form"
-                            noValidate
-                            onSubmit={() => console.log("sumbitted")}
-                            sx={{ mt: 1 }}
-                        >
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="username"
-                                label="Username"
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
-                                onChange={handleUsernameChange}
-                            />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="password"
-                                label="Password"
-                                name="password"
-                                type="password"
-                                autoComplete="current-password"
-                                onChange={handlePasswordChange}
-                            />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" />}
-                                label="Remember me"
-                            />
-                            <Box
-                                sx={{
-                                    justifyContent: "center",
-                                    display: "flex",
-                                }}
-                            >
-                                <Button
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2, width: "50%" }}
-                                    onClick={testApiCall}
-                                >
-                                    Login
-                                </Button>
-                            </Box>
-                            <Grid container>
-                                <Grid item xs>
-                                    <Link>Forgot password?</Link>
-                                </Grid>
-                                <Grid item>
-                                    <Link>Don't have an account? Sign Up</Link>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                    </Box>
-                </Grid>
-            </Grid>
-        </>
+                        {!isLoading ? "Login" : <CircularProgress />}
+                    </Button>
+                </div>
+            </Paper>
+        </div>
     );
 };
 

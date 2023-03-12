@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 
 import { Grid } from "@mui/material";
 import { RentType } from "../../types/RentType";
-
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import PhoneIcon from "@mui/icons-material/Phone";
