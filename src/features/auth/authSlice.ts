@@ -8,14 +8,12 @@ interface AuthState {
     loading: boolean;
     userToken: string | null;
     error: any;
-    success: boolean;
 }
 
 const initialState: AuthState = {
     loading: false,
     userToken: null,
     error: null,
-    success: false,
 };
 
 export const userLogin = createAsyncThunk(

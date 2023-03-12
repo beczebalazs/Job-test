@@ -9,7 +9,7 @@ const FilterSearchbar = () => {
             sx={{ display: "flex", color: "grey"}}
             elevation={5}
         >
-            <InputBase sx={{ ml: 2, flex: 1}} placeholder="Search..." />
+            <InputBase sx={{ ml: 2  , flex: 1}} placeholder="Search..." />
         </Paper>
     );
 };
