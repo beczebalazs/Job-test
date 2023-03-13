@@ -41,9 +41,9 @@ const BasicInput = (props: BasicInputProps) => {
 
     return (
         <>
-            <Paper component="form" sx={formStyle} elevation={3}>
+            <Paper component="form" sx={{...formStyle, height: "3rem"}} elevation={3}>
                 <InputBase
-                    sx={{ ml: 2, flex: 1 }}
+                    sx={{ ml: 2, flex: 1, }}
                     placeholder={placeholder}
                     type={type}
                     onChange={onChange}
