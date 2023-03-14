@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Avatar, Box, Grid, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import BasicInput from "../inputField/basicInput/BasicInput";
 import Button from "@mui/material/Button";
@@ -11,9 +11,12 @@ import { RootState } from "../../store";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import { InputStatesEnum } from "../../enums/InputStatesEnum";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const isLoading = useAppSelector((state: RootState) => state.auth.loading);
     const errorMessage = useAppSelector((state: RootState) => state.auth.error);
@@ -44,7 +47,9 @@ const LoginForm = () => {
         setPassword(e.target.value);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+
         username === ""
             ? setUsernameError(InputStatesEnum.Invalid)
             : setUsernameError(InputStatesEnum.Valid);
@@ -58,7 +63,13 @@ const LoginForm = () => {
         ) {
             credentials.username = username;
             credentials.password = password;
-            dispatch(userLogin(credentials));
+            dispatch(userLogin(credentials))
+                .unwrap()
+                .then(() => {
+                    setTimeout(() => {
+                        navigate("/rent");
+                    }, 1500);
+                });
         }
     };
 
@@ -82,65 +93,103 @@ const LoginForm = () => {
     }
 
     return (
-        <div className="flex items-center justify-center h-screen">
-            <Paper
-                elevation={8}
+        <Grid container component="main" sx={{ height: "100vh" }}>
+            {/* TODO: When user is logged in and tries to reach this page redirect to /rent */}
+            <Grid
+                item
+                xs={false}
+                sm={4}
+                md={7}
                 sx={{
-                    width: "fit-content",
-                    py: 3,
-                    px: 5,
-                    borderRadius: 2,
-                    marginBottom: "150px",
-                    minWidth: "20%",
+                    backgroundImage: "url(https://source.unsplash.com/random)",
+                    backgroundRepeat: "no-repeat",
+                    backgroundColor: (t) =>
+                        t.palette.mode === "light"
+                            ? t.palette.grey[50]
+                            : t.palette.grey[900],
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
                 }}
+            />
+            <Grid
+                item
+                xs={12}
+                sm={8}
+                md={5}
+                component={Paper}
+                elevation={6}
+                square
             >
-                <Typography
+                <Box
                     sx={{
-                        fontWeight: 500,
-                        fontSize: "xx-large",
+                        my: 8,
+                        mx: 4,
                         display: "flex",
-                        justifyContent: "center",
-                        pb: 2,
+                        flexDirection: "column",
+                        alignItems: "center",
                     }}
                 >
-                    Login
-                </Typography>
-                {userToken !== null && (
-                    <Alert severity="success" sx={{ mb: 2 }}>
-                        Login successful
-                    </Alert>
-                )}
-                {errorAlert}
-                <div className="pb-5">
-                    <BasicInput
-                        type="username"
-                        placeholder="Username"
-                        onChange={handleUsernameChange}
-                        error={usernameError}
-                        helperText="Username is required"
-                    />
-                </div>
-                <div className="pb-8">
-                    <BasicInput
-                        type="password"
-                        placeholder="Password"
-                        onChange={handlePasswordChange}
-                        error={passwordError}
-                        helperText="Password is required"
-                    />
-                </div>
-                <div className="flex justify-center">
-                    <Button
-                        variant="contained"
-                        sx={{ backgroundColor: constants.MAIN_COLOR }}
-                        onClick={handleSubmit}
-                        // when pressing enter prevent default and handle submit needs to be implemented
+                    <Avatar sx={{ m: 1, bgcolor: "#014783" }}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Login
+                    </Typography>
+                    <Box
+                        component="form"
+                        noValidate
+                        onSubmit={handleSubmit}
+                        sx={{ mt: 1, width: "100%" }}
                     >
-                        {!isLoading ? "Login" : <CircularProgress />}
-                    </Button>
-                </div>
-            </Paper>
-        </div>
+                        <div className="pt-5">
+                            {errorAlert}
+                            {userToken !== null && (
+                                <Alert severity="success" sx={{ mb: 2 }}>
+                                    Login successful
+                                </Alert>
+                            )}
+                            <div className="pb-3">
+                                <BasicInput
+                                    type="email"
+                                    placeholder="Username"
+                                    onChange={handleUsernameChange}
+                                    error={usernameError}
+                                    helperText="This field is required!"
+                                    onKeyDown={(e: any) =>
+                                        e.key === "Enter" && handleSubmit(e)
+                                    }
+                                />
+                            </div>
+                            <div>
+                                <BasicInput
+                                    type="password"
+                                    placeholder="Password"
+                                    onChange={handlePasswordChange}
+                                    error={passwordError}
+                                    helperText="Password is required"
+                                    onKeyDown={(e: any) =>
+                                        e.key === "Enter" && handleSubmit(e)
+                                    }
+                                />
+                            </div>
+                        </div>
+
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{
+                                backgroundColor: constants.MAIN_COLOR,
+                                mt: 3,
+                                mb: 2,
+                            }}
+                            fullWidth
+                        >
+                            {!isLoading ? "Login" : <CircularProgress />}
+                        </Button>
+                    </Box>
+                </Box>
+            </Grid>
+        </Grid>
     );
 };
 
