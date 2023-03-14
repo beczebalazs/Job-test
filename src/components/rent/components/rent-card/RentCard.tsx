@@ -37,7 +37,7 @@ export default function RentCard(props: RentType) {
                         <Typography
                             sx={{ fontWeight: 500, fontSize: "1.5rem" }}
                         >
-                            {title}
+                            {title.substring(0, 17)}...
                         </Typography>
                         <Typography sx={{ fontWeight: 300, lineHeight: 1 }}>
                             {region}, {city}, {address}
