@@ -12,9 +12,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import { InputStatesEnum } from "../../enums/InputStatesEnum";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const isLoading = useAppSelector((state: RootState) => state.auth.loading);
     const errorMessage = useAppSelector((state: RootState) => state.auth.error);
@@ -45,7 +47,9 @@ const LoginForm = () => {
         setPassword(e.target.value);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+
         username === ""
             ? setUsernameError(InputStatesEnum.Invalid)
             : setUsernameError(InputStatesEnum.Valid);
@@ -59,7 +63,13 @@ const LoginForm = () => {
         ) {
             credentials.username = username;
             credentials.password = password;
-            dispatch(userLogin(credentials));
+            dispatch(userLogin(credentials))
+                .unwrap()
+                .then(() => {
+                    setTimeout(() => {
+                        navigate("/rent");
+                    }, 1500);
+                });
         }
     };
 
@@ -84,6 +94,7 @@ const LoginForm = () => {
 
     return (
         <Grid container component="main" sx={{ height: "100vh" }}>
+            {/* TODO: When user is logged in and tries to reach this page redirect to /rent */}
             <Grid
                 item
                 xs={false}
@@ -144,6 +155,9 @@ const LoginForm = () => {
                                     onChange={handleUsernameChange}
                                     error={usernameError}
                                     helperText="This field is required!"
+                                    onKeyDown={(e: any) =>
+                                        e.key === "Enter" && handleSubmit(e)
+                                    }
                                 />
                             </div>
                             <div>
@@ -153,19 +167,25 @@ const LoginForm = () => {
                                     onChange={handlePasswordChange}
                                     error={passwordError}
                                     helperText="Password is required"
+                                    onKeyDown={(e: any) =>
+                                        e.key === "Enter" && handleSubmit(e)
+                                    }
                                 />
                             </div>
                         </div>
 
                         <Button
-                        variant="contained"
-                        sx={{ backgroundColor: constants.MAIN_COLOR, mt: 3, mb: 2, }}
-                        onClick={handleSubmit}
-                        fullWidth
-                        // when pressing enter prevent default and handle submit needs to be implemented
-                    >
-                        {!isLoading ? "Login" : <CircularProgress />}
-                    </Button>
+                            type="submit"
+                            variant="contained"
+                            sx={{
+                                backgroundColor: constants.MAIN_COLOR,
+                                mt: 3,
+                                mb: 2,
+                            }}
+                            fullWidth
+                        >
+                            {!isLoading ? "Login" : <CircularProgress />}
+                        </Button>
                     </Box>
                 </Box>
             </Grid>
