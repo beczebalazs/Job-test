@@ -1,11 +1,11 @@
 import { useState, ChangeEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectAllRealEstates } from "../../store/realEstates.selector";
-import { fetchRealEstates } from "../../store/realEstates.action";
+import { selectAllRealEstates } from "../../real-estates-store/realEstates.selector";
+import { fetchRealEstates } from "../../real-estates-store/realEstates.action";
 import { Grid, Pagination } from "@mui/material";
 import { Box } from "@mui/system";
-import { AsyncDispatch } from "../../store/store";
+import { AsyncDispatch } from "../../real-estates-store/store";
 
 import RentCard from "../rent/components/rent-card/RentCard";
 import Typography from "@mui/material/Typography";

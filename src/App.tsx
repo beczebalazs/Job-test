@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 import { Provider } from "react-redux";
-import store from "./store/store";
+import store from "./real-estates-store/store";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "./theme";
 

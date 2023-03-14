@@ -2,11 +2,11 @@ import { useState, useRef, MouseEvent, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectAllRealEstates } from "../../store/realEstates.selector";
-import { fetchRealEstates } from "../../store/realEstates.action";
+import { selectAllRealEstates } from "../../real-estates-store/realEstates.selector";
+import { fetchRealEstates } from "../../real-estates-store/realEstates.action";
 import { Grid } from "@mui/material";
 import { RentType } from "../../types/RentType";
-import { AsyncDispatch } from "../../store/store";
+import { AsyncDispatch } from "../../real-estates-store/store";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
