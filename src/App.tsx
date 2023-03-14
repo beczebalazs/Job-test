@@ -1,7 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 
-import { Provider } from "react-redux";
-import store from "./real-estates-store/store";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "./theme";
 
@@ -11,11 +9,13 @@ import Rent from "./components/rent/Rent";
 import RentDetail from "./components/rent-detail/RentDetail";
 import Login from "./components/login/Login";
 import Favourites from "./components/favourites/Favourites";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 function App() {
     return (
-        <div>
-            <Provider store={store}>
+        <Provider store={store}>
+            <div>
                 <ThemeProvider theme={theme}>
                     <Navbar />
                     <main className="mt-16">
@@ -31,8 +31,8 @@ function App() {
                         </Routes>
                     </main>
                 </ThemeProvider>
-            </Provider>
-        </div>
+            </div>
+        </Provider>
     );
 }
 
