@@ -5,7 +5,7 @@ import { selectAllRealEstates } from "../../real-estates-store/realEstates.selec
 import { fetchRealEstates } from "../../real-estates-store/realEstates.action";
 import { Grid, Pagination } from "@mui/material";
 import { Box } from "@mui/system";
-import { AsyncDispatch } from "../../real-estates-store/store";
+import { AsyncDispatch } from "../../store";
 
 import RentCard from "../rent/components/rent-card/RentCard";
 import Typography from "@mui/material/Typography";

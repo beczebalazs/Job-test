@@ -2,6 +2,8 @@ import { Routes, Route } from "react-router-dom";
 
 import { ThemeProvider } from "@mui/material";
 import { theme } from "./theme";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 import Navbar from "./components/navbar/Navbar";
 import Home from "./components/home/Home";
@@ -9,8 +11,6 @@ import Rent from "./components/rent/Rent";
 import RentDetail from "./components/rent-detail/RentDetail";
 import Login from "./components/login/Login";
 import Favourites from "./components/favourites/Favourites";
-import { Provider } from "react-redux";
-import { store } from "./store";
 
 function App() {
     return (

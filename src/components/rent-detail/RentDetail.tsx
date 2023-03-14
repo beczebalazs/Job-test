@@ -6,7 +6,7 @@ import { selectAllRealEstates } from "../../real-estates-store/realEstates.selec
 import { fetchRealEstates } from "../../real-estates-store/realEstates.action";
 import { Grid } from "@mui/material";
 import { RentType } from "../../types/RentType";
-import { AsyncDispatch } from "../../real-estates-store/store";
+import { AsyncDispatch } from "../../store";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
