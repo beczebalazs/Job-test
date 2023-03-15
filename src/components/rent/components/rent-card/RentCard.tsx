@@ -13,7 +13,7 @@ export default function RentCard(props: RentType) {
     const navigate = useNavigate();
 
     function handleReadMoreClick() {
-        navigate(`/rent-detail/${id}`);
+        navigate(`/rent/${id}`);
     }
 
     return (

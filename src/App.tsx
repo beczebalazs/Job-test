@@ -22,10 +22,7 @@ function App() {
                         <Routes>
                             <Route index element={<Home />} />
                             <Route path="/rent" element={<Rent />} />
-                            <Route
-                                path="/rent-detail/:id"
-                                element={<RentDetail />}
-                            />
+                            <Route path="/rent/:id" element={<RentDetail />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/favorites" element={<Favourites />} />
                         </Routes>
