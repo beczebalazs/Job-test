@@ -1,16 +1,17 @@
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { ThemeProvider } from "@mui/material";
-import { theme } from "./theme";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import { theme } from "./theme";
 
-import Navbar from "./components/navbar/Navbar";
-import Home from "./components/home/Home";
-import Rent from "./components/rent/Rent";
-import RentDetail from "./components/rent-detail/RentDetail";
-import Login from "./components/login/Login";
 import Favourites from "./components/favourites/Favourites";
+import Home from "./components/home/Home";
+import Login from "./components/login/Login";
+import Navbar from "./components/navbar/Navbar";
+import Profile from "./components/profile/Profile";
+import RentDetail from "./components/rent-detail/RentDetail";
+import Rent from "./components/rent/Rent";
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                             />
                             <Route path="/login" element={<Login />} />
                             <Route path="/favorites" element={<Favourites />} />
+                            <Route path="/profile" element={<Profile />} />
                         </Routes>
                     </main>
                 </ThemeProvider>

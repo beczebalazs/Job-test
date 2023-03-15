@@ -1,9 +1,8 @@
+import { Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks/useTypedSelector";
 import companyLogo from "../../images/company-logo.png";
 import { RootState } from "../../store";
-import { Avatar } from "@mui/material";
-
 
 export default function Navbar() {
     const authToken = useAppSelector(
@@ -34,7 +33,9 @@ export default function Navbar() {
                             Login
                         </Link>
                     ) : (
-                        <Avatar src="../../images/profile-picture.webp"/>
+                        <Link to="/profile">
+                            <Avatar src="../../images/profile-picture.webp" />
+                        </Link>
                     )}
                 </div>
             </nav>
