@@ -7,13 +7,15 @@ import {
     getRealEstatesFailure,
 } from "./realEstates.slice";
 
+import constants from "../constants/constants";
+
 export const fetchRealEstates = createAsyncThunk(
     "real-estates/fetchRealEstates",
     async (_, { dispatch }) => {
         try {
             dispatch(getRealEstatesStart());
             const response = await axios.get<RealEstates[]>(
-                "http://localhost:3001/real-estates"
+                `${constants.API_URL}/real-estates?apiKey=${constants.API_KEY}`
             );
             dispatch(getRealEstatesSuccess(response.data));
         } catch (error: any) {
