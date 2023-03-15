@@ -6,6 +6,7 @@ import { fetchRealEstates } from "../../real-estates-store/realEstates.action";
 import { Grid, Pagination } from "@mui/material";
 import { Box } from "@mui/system";
 import { AsyncDispatch } from "../../store";
+import { selectFavorites } from "../../features/favorite/favoriteSlice";
 
 import RentCard from "../rent/components/rent-card/RentCard";
 import Typography from "@mui/material/Typography";
@@ -17,6 +18,8 @@ export default function Rent() {
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(false);
 
+    const favorite = useSelector(selectFavorites);
+
     const itemsPerPage = 15;
 
     const dispatch: AsyncDispatch = useDispatch();
@@ -27,6 +30,10 @@ export default function Rent() {
     }, [dispatch]);
 
     const realEstates = useSelector(selectAllRealEstates);
+
+    const favoriteRealEstates = realEstates.filter((realEstate) =>
+        favorite.includes(realEstate.id)
+    );
 
     const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value);
@@ -41,7 +48,7 @@ export default function Rent() {
         setCurrentPage(1);
     };
 
-    const filteredData = realEstates.filter(
+    const filteredData = favoriteRealEstates.filter(
         (item) =>
             item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.description.toLowerCase().includes(searchTerm.toLowerCase())

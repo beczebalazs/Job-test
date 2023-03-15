@@ -51,4 +51,4 @@ export const {
     getRealEstatesFailure,
 } = realEstatesSlice.actions;
 
-export default realEstatesSlice.reducer;
+export default realEstatesSlice;
