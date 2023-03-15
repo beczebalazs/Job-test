@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
     Checkbox,
     FormControlLabel,
@@ -16,6 +17,16 @@ interface TextCheckboxFilterProps {
 
 const TextCheckboxFilter = (props: TextCheckboxFilterProps) => {
     const { title, options } = props;
+
+    const [searchValue, setSearchValue] = useState("");
+
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchValue(event.target.value);
+    };
+
+    const filteredOptions = options.filter((option) =>
+        option.toLowerCase().includes(searchValue.toLowerCase())
+    );
 
     const navigate = useNavigate();
 
@@ -44,7 +55,10 @@ const TextCheckboxFilter = (props: TextCheckboxFilterProps) => {
                 {title}
             </Typography>
             <div className="pb-3">
-                <FilterSearchbar />
+                <FilterSearchbar
+                    value={searchValue}
+                    onChange={handleSearchChange}
+                />
             </div>
             <FormGroup
                 sx={{
@@ -56,7 +70,7 @@ const TextCheckboxFilter = (props: TextCheckboxFilterProps) => {
                     flexWrap: "nowrap",
                 }}
             >
-                {options.map((item) => (
+                {filteredOptions.map((item) => (
                     <FormControlLabel
                         control={
                             <Checkbox
