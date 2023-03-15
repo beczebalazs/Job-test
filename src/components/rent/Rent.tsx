@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 import { selectAllRealEstates } from "../../real-estates-store/realEstates.selector";
 import { fetchRealEstates } from "../../real-estates-store/realEstates.action";
@@ -23,6 +24,14 @@ export default function Rent() {
 
     const dispatch: AsyncDispatch = useDispatch();
 
+    const { search } = useLocation();
+
+    const queryParams = new URLSearchParams(search);
+
+    const priceValues = queryParams.getAll("Price");
+    const cityValues = queryParams.getAll("City");
+    const regionValues = queryParams.getAll("Region");
+
     useEffect(() => {
         setLoading(true);
         dispatch(fetchRealEstates()).then(() => setLoading(false));
@@ -43,11 +52,34 @@ export default function Rent() {
         setCurrentPage(1);
     };
 
-    const filteredData = realEstates.filter(
-        (item) =>
+    const filteredData = realEstates.filter((item) => {
+        const matchesSearchTerm =
             item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.description.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+            item.description.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesPrice =
+            priceValues.length === 0 ||
+            priceValues.some((price) => {
+                if (price.includes("+")) {
+                    const minPrice = Number(price.replace("+", ""));
+                    return Number(item.price) >= minPrice;
+                } else {
+                    const [minPrice, maxPrice] = price.split("-").map(Number);
+                    return (
+                        Number(item.price) >= minPrice &&
+                        Number(item.price) <= maxPrice
+                    );
+                }
+            });
+
+        const matchesCity =
+            cityValues.length === 0 || cityValues.includes(item.city);
+        const matchesRegion =
+            regionValues.length === 0 || regionValues.includes(item.region);
+
+        return (
+            matchesSearchTerm && matchesPrice && matchesCity && matchesRegion
+        );
+    });
 
     if (loading) {
         return (
@@ -78,7 +110,7 @@ export default function Rent() {
                                     pl: 0.2,
                                 }}
                             >
-                                More than {filteredData.length} results
+                                {filteredData.length} results
                             </Typography>
                             <div className="pt-6 flex ">
                                 <PropertySearchbar
@@ -93,10 +125,10 @@ export default function Rent() {
                                 <CheckboxFilter
                                     title="Price"
                                     options={[
-                                        "0 - 100",
-                                        "100 - 200",
-                                        "300 - 400",
-                                        "400 - 500",
+                                        "1-100",
+                                        "100-200",
+                                        "300-400",
+                                        "400-500",
                                         "500+",
                                     ]}
                                 />
@@ -107,15 +139,13 @@ export default function Rent() {
                                     options={[
                                         "Targu Mures",
                                         "Gheorgheni",
-                                        "Taktaharkány",
-                                        "Cluj-Napoca",
+                                        "Brasov",
+                                        "Cluj Napoca",
                                         "Miercurea Ciuc",
                                         "Sovata",
                                         "Bucuresti",
                                         "Tusnádfürdő",
                                         "Marosfő",
-                                        "Alfalu",
-                                        "Mittudjamen mi",
                                     ]}
                                 />
                             </div>
@@ -123,12 +153,12 @@ export default function Rent() {
                                 <TextCheckboxFilter
                                     title="Region"
                                     options={[
-                                        "Harghita",
-                                        "Mures",
-                                        "Covasna",
-                                        "Brasov",
-                                        "Braila",
-                                        "Ilfov",
+                                        "HR",
+                                        "MS",
+                                        "CV",
+                                        "BV",
+                                        "CJ",
+                                        "B",
                                     ]}
                                 />
                             </div>

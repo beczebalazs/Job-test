@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import FilterSearchbar from "../rent/components/searchbars/FilterSearchbar";
 import { checkboxStyle } from "../utils/checkboxStyle/checkboxStyle";
+import { useNavigate } from "react-router-dom";
 
 interface TextCheckboxFilterProps {
     title: string;
@@ -15,6 +16,27 @@ interface TextCheckboxFilterProps {
 
 const TextCheckboxFilter = (props: TextCheckboxFilterProps) => {
     const { title, options } = props;
+
+    const navigate = useNavigate();
+
+    const handleCheckboxChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const { name, checked } = event.target;
+        const queryParams = new URLSearchParams(window.location.search);
+
+        if (checked) {
+            queryParams.append(name, event.target.value);
+        } else {
+            const values = queryParams.getAll(name);
+            values.splice(values.indexOf(event.target.value), 1);
+            queryParams.delete(name);
+            values.forEach((value) => queryParams.append(name, value));
+        }
+
+        const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
+        navigate(newUrl, { replace: true });
+    };
 
     return (
         <Paper elevation={8} sx={{ px: 2, py: 2 }}>
@@ -36,7 +58,14 @@ const TextCheckboxFilter = (props: TextCheckboxFilterProps) => {
             >
                 {options.map((item) => (
                     <FormControlLabel
-                        control={<Checkbox sx={checkboxStyle} />}
+                        control={
+                            <Checkbox
+                                sx={checkboxStyle}
+                                name={title}
+                                value={item}
+                                onChange={handleCheckboxChange}
+                            />
+                        }
                         label={item}
                     />
                 ))}
