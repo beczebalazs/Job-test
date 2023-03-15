@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 
 import { ThemeProvider } from "@mui/material";
@@ -7,7 +7,6 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./store";
 
 import Navbar from "./components/navbar/Navbar";
-import Home from "./components/home/Home";
 import Rent from "./components/rent/Rent";
 import RentDetail from "./components/rent-detail/RentDetail";
 import Login from "./components/login/Login";
@@ -22,7 +21,10 @@ function App() {
                         <Navbar />
                         <main className="mt-16">
                             <Routes>
-                                <Route index element={<Home />} />
+                                <Route
+                                    path="/"
+                                    element={<Navigate replace to="/rent" />}
+                                />
                                 <Route path="/rent" element={<Rent />} />
                                 <Route
                                     path="/rent/:id"
