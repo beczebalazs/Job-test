@@ -1,8 +1,15 @@
 import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import constants from "../../constants/constants";
+import {
+    getCurrentUser,
+    updateCurrentUser,
+} from "../../features/currentUser/currentUserSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/useTypedSelector";
+import { RootState } from "../../store";
+import { CurrentUserResponseType } from "../../types/currentUser/CurrentUserResponseType";
 import { isEmail } from "../../utils/isEmail";
 
 export const generalStyle = {
@@ -10,18 +17,12 @@ export const generalStyle = {
     pt: 3,
 };
 
-export const mockData = {
-    email: "seres@example.com",
-    username: "seres",
-    firstName: "Tamas",
-    lastName: "Seres",
-    gender: "MAN",
-    age: 21,
-    role: "ADMIN",
-};
-
 const Profile = () => {
-    const currentData = mockData;
+    const dispatch = useAppDispatch();
+
+    const currentUserState = useAppSelector(
+        (state: RootState) => state.currentUser.currentUser
+    );
 
     const [isEditable, setIsEditable] = useState(false);
     const [readOnly, setReadOnly] = useState(true);
@@ -31,6 +32,24 @@ const Profile = () => {
     const [lastName, setLastName] = useState("");
     const [emailError, setEmailError] = useState(false);
 
+    let currentData: CurrentUserResponseType = {
+        _id: "",
+        email: "",
+        username: "",
+        firstName: "",
+        lastName: "",
+        gender: "",
+        age: 0,
+        role: "",
+    };
+
+    if (currentUserState !== null) {
+        currentData = currentUserState;
+    } else {
+        // TODO: Error handling -- Scheresh
+        console.log("Error occured");
+    }
+
     const resetFields = () => {
         setEmail(currentData.email);
         setUsername(currentData.username);
@@ -39,9 +58,14 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        resetFields();
+        dispatch(getCurrentUser());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        resetFields();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentUserState]);
 
     const genderEval = () => {
         if (currentData.gender === "MAN") {
@@ -74,6 +98,17 @@ const Profile = () => {
                     setEmailError(false);
                     setIsEditable(false);
                     setReadOnly(true);
+                    dispatch(
+                        updateCurrentUser({
+                            email: email,
+                            username: username,
+                            firstName: firstName,
+                            lastName: lastName,
+                            gender: currentUserState?.gender,
+                            age: currentUserState?.age,
+                            role: currentUserState?.role,
+                        })
+                    );
                 }
 
                 break;
@@ -137,7 +172,9 @@ const Profile = () => {
                             label="Email"
                             value={email}
                             error={emailError}
-                            helperText={emailError ? "Invalid email format" : ""}
+                            helperText={
+                                emailError ? "Invalid email format" : ""
+                            }
                             InputProps={{
                                 readOnly: readOnly,
                             }}
