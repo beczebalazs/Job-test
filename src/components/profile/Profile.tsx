@@ -2,13 +2,14 @@ import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import constants from "../../constants/constants";
 import {
     getCurrentUser,
-    updateCurrentUser,
+    updateCurrentUser
 } from "../../features/currentUser/currentUserSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/useTypedSelector";
-import { RootState } from "../../store";
+import { useAppSelector } from "../../hooks/useTypedSelector";
+import { AsyncDispatch, RootState } from "../../store";
 import { CurrentUserResponseType } from "../../types/currentUser/CurrentUserResponseType";
 import { isEmail } from "../../utils/isEmail";
 
@@ -18,7 +19,7 @@ export const generalStyle = {
 };
 
 const Profile = () => {
-    const dispatch = useAppDispatch();
+    const dispatch: AsyncDispatch = useDispatch();
 
     const currentUserState = useAppSelector(
         (state: RootState) => state.currentUser.currentUser
