@@ -2,8 +2,8 @@ import { useState, ChangeEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-import { selectAllRealEstates } from "../../features/real-estates/realestatesSlice"; 
-import { fetchRealEstates } from "../../features/real-estates/realestatesSlice"; 
+import { selectAllRealEstates } from "../../features/real-estates/realestatesSlice";
+import { fetchRealEstates } from "../../features/real-estates/realestatesSlice";
 import { Button, Grid, Pagination } from "@mui/material";
 import { Box } from "@mui/system";
 import { AsyncDispatch } from "../../store";
@@ -51,7 +51,8 @@ export default function Rent() {
     useEffect(() => {
         setLoading(true);
         dispatch(fetchRealEstates()).then(() => setLoading(false));
-    }, [dispatch]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const realEstates = useSelector(selectAllRealEstates);
 
