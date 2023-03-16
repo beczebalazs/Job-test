@@ -1,5 +1,5 @@
-import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 import constants from "../../constants/constants";
 import { LoginRequestType } from "../../types/login/LoginRequestType";
 import { LoginResponseType } from "../../types/login/LoginResponseType";
