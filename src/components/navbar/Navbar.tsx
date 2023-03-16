@@ -11,8 +11,8 @@ export default function Navbar() {
 
     return (
         <div className="fixed top-0 left-0 right-0 h-30 bg-white backdrop-blur-md z-50 shadow-2xl">
-            <nav className="ml-5 font-semibold text-xl flex items-center">
-                <div className="flex items-center gap-x-14 mr-auto">
+            <nav className="ml-5 font-semibold text-xl flex items-center max-sm:text-base max-sm:ml-0">
+                <div className="flex items-center gap-x-14 mr-auto max-sm:gap-x-5 max-sm:mr-5">
                     <Link to="/" className="hover:text-midnight-green">
                         <img
                             src={companyLogo}
@@ -27,7 +27,7 @@ export default function Navbar() {
                         Favorite
                     </Link>
                 </div>
-                <div className="flex items-center mr-16">
+                <div className="flex items-center mr-16 max-sm:mr-0">
                     {authToken === null ? (
                         <Link to="/login" className="hover:text-gray ">
                             Login
