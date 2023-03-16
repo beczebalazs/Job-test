@@ -6,6 +6,7 @@ import { fetchRealEstates } from "../../real-estates-store/realEstates.action";
 import { Grid, Pagination } from "@mui/material";
 import { Box } from "@mui/system";
 import { AsyncDispatch } from "../../store";
+import { selectFavorites } from "../../features/favorite/favoriteSlice";
 
 import RentCard from "../rent/components/rent-card/RentCard";
 import Typography from "@mui/material/Typography";
@@ -17,6 +18,8 @@ export default function Rent() {
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(false);
 
+    const favorite = useSelector(selectFavorites);
+
     const itemsPerPage = 15;
 
     const dispatch: AsyncDispatch = useDispatch();
@@ -27,6 +30,10 @@ export default function Rent() {
     }, [dispatch]);
 
     const realEstates = useSelector(selectAllRealEstates);
+
+    const favoriteRealEstates = realEstates.filter((realEstate) =>
+        favorite.includes(realEstate.id)
+    );
 
     const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value);
@@ -41,7 +48,7 @@ export default function Rent() {
         setCurrentPage(1);
     };
 
-    const filteredData = realEstates.filter(
+    const filteredData = favoriteRealEstates.filter(
         (item) =>
             item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.description.toLowerCase().includes(searchTerm.toLowerCase())
@@ -60,10 +67,14 @@ export default function Rent() {
     } else {
         return (
             <div>
-                <Box sx={{ mx: 20, pt: 10 }}>
+                <Box
+                    sx={{
+                        mx: { xs: 4, sm: 8, md: 20 },
+                        pt: { xs: 2, sm: 4, md: 10 },
+                    }}
+                >
                     <Grid container>
-                        <Grid item md={2} />
-                        <Grid item md={10}>
+                        <Grid item md={12}>
                             <Typography
                                 sx={{ fontWeight: 700, fontSize: "2.25rem" }}
                             >
@@ -76,9 +87,9 @@ export default function Rent() {
                                     pl: 0.2,
                                 }}
                             >
-                                More than {filteredData.length} results
+                                {filteredData.length} favorites
                             </Typography>
-                            <div className="pt-6 flex ">
+                            <div className="pt-6 flex max-sm:w-9/12">
                                 <PropertySearchbar
                                     placeholder="Search..."
                                     value={searchTerm}
@@ -86,10 +97,10 @@ export default function Rent() {
                                 />
                             </div>
                         </Grid>
-                        <Grid item md={2} sx={{ pt: 2, pr: 4 }}></Grid>
                         <Grid
                             container
-                            md={10}
+                            md={12}
+                            xs={12}
                             sx={{ pt: 2, pb: 4 }}
                             spacing={3}
                         >

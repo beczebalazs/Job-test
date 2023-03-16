@@ -128,4 +128,4 @@ const currentUserSlice: Slice<CurrentUserState, {}, "currentUser"> =
         },
     });
 
-export default currentUserSlice.reducer;
+export default currentUserSlice;
