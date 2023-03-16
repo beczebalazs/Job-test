@@ -69,14 +69,14 @@ export default function Rent() {
             <div>
                 <Box
                     sx={{
-                        mx: { xs: 4, sm: 8, md: 20 },
-                        pt: { xs: 2, sm: 4, md: 10 },
+                        mx: { xs: 4, md: 8, xl: 20 },
+                        pt: { xs: 2, md: 4, xl: 10 },
                     }}
                 >
                     <Grid container>
                         <Grid item md={12}>
                             <Typography
-                                sx={{ fontWeight: 700, fontSize: "2.25rem" }}
+                                sx={{ fontWeight: 700, fontSize: "2rem" }}
                             >
                                 Favourites
                             </Typography>
@@ -110,7 +110,7 @@ export default function Rent() {
                                     currentPage * itemsPerPage
                                 )
                                 .map((data) => (
-                                    <Grid item md={4}>
+                                    <Grid item xs={12} sm={6} md={4} lg={3}>
                                         <RentCard
                                             key={data.id}
                                             id={data.id}
