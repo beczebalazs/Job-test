@@ -1,8 +1,8 @@
 import { useState, ChangeEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectAllRealEstates } from "../../real-estates-store/realEstates.selector";
-import { fetchRealEstates } from "../../real-estates-store/realEstates.action";
+import { selectAllRealEstates } from "../../features/real-estates/realestatesSlice";
+import { fetchRealEstates } from "../../features/real-estates/realestatesSlice";
 import { Grid, Pagination } from "@mui/material";
 import { Box } from "@mui/system";
 import { AsyncDispatch } from "../../store";

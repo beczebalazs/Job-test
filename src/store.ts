@@ -15,7 +15,7 @@ import storage from "redux-persist/lib/storage";
 import authSlice from "./features/auth/authSlice";
 import currentUserSlice from "./features/currentUser/currentUserSlice";
 import favoriteSlice from "./features/favorite/favoriteSlice";
-import realEstatesSlice from "./real-estates-store/realEstates.slice";
+import realEstatesSlice from "./features/real-estates/realestatesSlice";
 
 export const persistConfig = {
     key: "root",
