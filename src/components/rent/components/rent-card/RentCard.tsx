@@ -15,7 +15,7 @@ import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarIcon from "@mui/icons-material/Star";
 
 export default function RentCard(props: RentType) {
-    const { image, title, price, region, city, address, id } = props;
+    const { image, title, price, city, address, id } = props;
 
     const dispatch = useDispatch();
 
