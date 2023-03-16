@@ -50,7 +50,7 @@ const Profile = () => {
         console.log("Error occured");
     }
 
-    const resetFields = () => {
+    const setFields = () => {
         setEmail(currentData.email);
         setUsername(currentData.username);
         setFirstName(currentData.firstName);
@@ -63,7 +63,7 @@ const Profile = () => {
     }, []);
 
     useEffect(() => {
-        resetFields();
+        setFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUserState]);
 
@@ -89,7 +89,7 @@ const Profile = () => {
                 setIsEditable(false);
                 setReadOnly(true);
                 setEmailError(false);
-                resetFields();
+                setFields();
                 break;
             case "save":
                 if (isEmail(email) === null) {
@@ -118,6 +118,7 @@ const Profile = () => {
     };
 
     return (
+        // TODO: Set textfield to disabled when not in edit mode
         <div className="flex items-center justify-center h-screen">
             <Paper
                 elevation={8}
