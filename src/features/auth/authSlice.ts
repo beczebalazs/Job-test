@@ -20,18 +20,12 @@ export const userLogin = createAsyncThunk(
     "auth/login",
     async (data: LoginRequestType, thunkAPI) => {
         try {
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            };
             const response = await axios.post<LoginResponseType>(
-                `${constants.API_URL}/log-in?apiKey=${constants.API_KEY}`,
+                `${constants.API_URL}/log-in?apiKey=${process.env.REACT_APP_API_KEY}`,
                 {
                     username: data.username,
                     password: data.password,
                 },
-                config
             );
             return response.data;
         } catch (error: any) {

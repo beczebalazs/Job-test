@@ -37,7 +37,7 @@ export const fetchRealEstates = createAsyncThunk(
     async (_, thunkAPI) => {
         try {
             const response = await axios.get<RealEstates[]>(
-                `${constants.API_URL}/real-estates?apiKey=${constants.API_KEY}`
+                `${constants.API_URL}/real-estates?apiKey=${process.env.REACT_APP_API_KEY}`
             );
             return response.data;
         } catch (error: any) {

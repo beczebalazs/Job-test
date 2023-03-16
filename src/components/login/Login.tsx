@@ -2,7 +2,7 @@ import { Avatar, Box, Grid, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import BasicInput from "../inputField/basicInput/BasicInput";
 import Button from "@mui/material/Button";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import constants from "../../constants/constants";
 import { userLogin } from "../../features/auth/authSlice";
 import { LoginRequestType } from "../../types/login/LoginRequestType";
@@ -23,6 +23,12 @@ const LoginForm = () => {
     const userToken = useAppSelector(
         (state: RootState) => state.auth.userToken
     );
+
+    useEffect(() => {
+        return () => {
+            // TODO: Implement error clean up
+        } 
+    }, [])
 
     const [usernameError, setUsernameError] = useState<InputStatesEnum>(
         InputStatesEnum.Initial

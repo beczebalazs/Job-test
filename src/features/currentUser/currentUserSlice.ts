@@ -36,12 +36,11 @@ export const getCurrentUser = createAsyncThunk(
             const authToken = state.auth.userToken;
             const config = {
                 headers: {
-                    "Content-Type": "application/json",
                     Authorization: `Bearer ${authToken}`,
                 },
             };
             const response = await axios.get<CurrentUserResponseType>(
-                `${constants.API_URL}/currentUser?apiKey=${constants.API_KEY}`,
+                `${constants.API_URL}/currentUser?apiKey=${process.env.REACT_APP_API_KEY}`,
                 config
             );
             return response.data;
@@ -59,12 +58,11 @@ export const updateCurrentUser = createAsyncThunk(
             const authToken = state.auth.userToken;
             const config = {
                 headers: {
-                    "Content-Type": "application/json",
                     Authorization: `Bearer ${authToken}`,
                 },
             };
             const response = await axios.patch<UpdateCurrentUserResponseType>(
-                `${constants.API_URL}/currentUser?apiKey=${constants.API_KEY}`,
+                `${constants.API_URL}/currentUser?apiKey=${process.env.REACT_APP_API_KEY}`,
                 {
                     email: data.email,
                     username: data.username,
