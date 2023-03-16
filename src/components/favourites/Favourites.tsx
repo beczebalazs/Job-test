@@ -67,10 +67,14 @@ export default function Rent() {
     } else {
         return (
             <div>
-                <Box sx={{ mx: 20, pt: 10 }}>
+                <Box
+                    sx={{
+                        mx: { xs: 4, sm: 8, md: 20 },
+                        pt: { xs: 2, sm: 4, md: 10 },
+                    }}
+                >
                     <Grid container>
-                        <Grid item md={2} />
-                        <Grid item md={10}>
+                        <Grid item md={12}>
                             <Typography
                                 sx={{ fontWeight: 700, fontSize: "2.25rem" }}
                             >
@@ -83,9 +87,9 @@ export default function Rent() {
                                     pl: 0.2,
                                 }}
                             >
-                                More than {filteredData.length} results
+                                {filteredData.length} favorites
                             </Typography>
-                            <div className="pt-6 flex ">
+                            <div className="pt-6 flex max-sm:w-9/12">
                                 <PropertySearchbar
                                     placeholder="Search..."
                                     value={searchTerm}
@@ -93,10 +97,10 @@ export default function Rent() {
                                 />
                             </div>
                         </Grid>
-                        <Grid item md={2} sx={{ pt: 2, pr: 4 }}></Grid>
                         <Grid
                             container
-                            md={10}
+                            md={12}
+                            xs={12}
                             sx={{ pt: 2, pb: 4 }}
                             spacing={3}
                         >
