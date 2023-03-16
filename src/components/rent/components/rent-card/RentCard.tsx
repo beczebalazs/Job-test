@@ -52,37 +52,43 @@ export default function RentCard(props: RentType) {
                     <img
                         src={image}
                         alt=""
-                        className="rounded"
+                        className="rounded h-52"
                         onClick={handleReadMoreClick}
                     />
                 )}
                 <Grid sx={{ pt: 1 }}>
                     <div>
                         <Typography
-                            sx={{ fontWeight: 500, fontSize: "1.5rem" }}
+                            sx={{ fontWeight: 500, fontSize: "1.3rem" }}
                             onClick={handleReadMoreClick}
                         >
-                            {title.substring(0, 17)}...
+                            {title.substring(0, 16)}...
                         </Typography>
                         <Typography
                             sx={{ fontWeight: 300, lineHeight: 1 }}
                             onClick={handleReadMoreClick}
                         >
-                            {region}, {city}, {address}
+                            {city}
+                        </Typography>
+                        <Typography
+                            sx={{ fontWeight: 300, lineHeight: 1 }}
+                            onClick={handleReadMoreClick}
+                        >
+                            {address}
                         </Typography>
                     </div>
                     <div className="pt-6 pb-2 flex justify-between">
                         <Typography
-                            sx={{ fontWeight: 800, fontSize: "1.8rem" }}
+                            sx={{ fontWeight: 800, fontSize: "1.4rem" }}
                             onClick={handleReadMoreClick}
                         >
-                            {price} € / month
+                            {price}€ / month
                         </Typography>
                         <div>
                             {favorite.includes(id) ? (
                                 <StarIcon
                                     sx={{
-                                        fontSize: "2.8rem",
+                                        fontSize: "2rem",
                                         color: "#014783",
                                         cursor: "pointer",
                                     }}
@@ -91,7 +97,7 @@ export default function RentCard(props: RentType) {
                             ) : (
                                 <StarBorderOutlinedIcon
                                     sx={{
-                                        fontSize: "2.8rem",
+                                        fontSize: "2rem",
                                         color: "gray",
                                         cursor: "pointer",
                                     }}

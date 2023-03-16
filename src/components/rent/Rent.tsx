@@ -4,10 +4,14 @@ import { useLocation } from "react-router-dom";
 
 import { selectAllRealEstates } from "../../real-estates-store/realEstates.selector";
 import { fetchRealEstates } from "../../real-estates-store/realEstates.action";
-import { Grid, Pagination } from "@mui/material";
+import { Button, Grid, Pagination } from "@mui/material";
 import { Box } from "@mui/system";
 import { AsyncDispatch } from "../../store";
+import { useTheme } from "@mui/material/styles";
+import { Modal } from "@mui/material";
+import { Divider } from "@mui/material";
 
+import useMediaQuery from "@mui/material/useMediaQuery";
 import RentCard from "./components/rent-card/RentCard";
 import Typography from "@mui/material/Typography";
 import PropertySearchbar from "./components/searchbars/PropertySearchbar";
@@ -19,6 +23,10 @@ export default function Rent() {
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const theme = useTheme();
+    const isMdScreen = useMediaQuery(theme.breakpoints.down("md"));
 
     const itemsPerPage = 15;
 
@@ -31,6 +39,14 @@ export default function Rent() {
     const priceValues = queryParams.getAll("Price");
     const cityValues = queryParams.getAll("City");
     const regionValues = queryParams.getAll("Region");
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
 
     useEffect(() => {
         setLoading(true);
@@ -94,12 +110,16 @@ export default function Rent() {
     } else {
         return (
             <div>
-                <Box sx={{ mx: 20, pt: 10 }}>
+                <Box
+                    sx={{
+                        mx: { xs: 4, md: 8, xl: 20 },
+                        pt: { xs: 2, md: 4, xl: 10 },
+                    }}
+                >
                     <Grid container>
-                        <Grid item md={2} />
-                        <Grid item md={10}>
+                        <Grid item md={12}>
                             <Typography
-                                sx={{ fontWeight: 700, fontSize: "2.25rem" }}
+                                sx={{ fontWeight: 700, fontSize: "2rem" }}
                             >
                                 Rent a house
                             </Typography>
@@ -112,7 +132,101 @@ export default function Rent() {
                             >
                                 {filteredData.length} results
                             </Typography>
-                            <div className="pt-6 flex ">
+                            {isMdScreen && (
+                                <div className="pt-6 flex max-sm:w-9/12">
+                                    <Button
+                                        variant="outlined"
+                                        sx={{
+                                            width: "100%",
+                                            color: "black",
+                                            border: "1px solid grey",
+                                            backgroundColor: "#fff",
+                                        }}
+                                        onClick={handleOpenModal}
+                                    >
+                                        Filters
+                                    </Button>
+                                    <Modal
+                                        open={isModalOpen}
+                                        onClose={handleCloseModal}
+                                        sx={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <Box
+                                            sx={{
+                                                backgroundColor: "#fff",
+                                                width: "80vw",
+                                                maxHeight: "80vh",
+                                                overflowY: "auto",
+                                                padding: "30px",
+                                                position: "relative",
+                                            }}
+                                        >
+                                            <Grid
+                                                item
+                                                md={3}
+                                                lg={3}
+                                                xl={2}
+                                                sx={{ pb: 2 }}
+                                            >
+                                                <div className="pb-5">
+                                                    <CheckboxFilter
+                                                        title="Price"
+                                                        options={[
+                                                            "1-100",
+                                                            "100-200",
+                                                            "300-400",
+                                                            "400-500",
+                                                            "500+",
+                                                        ]}
+                                                    />
+                                                </div>
+                                                <Divider sx={{ mb: 2 }} />
+                                                <div className="pb-5">
+                                                    <TextCheckboxFilter
+                                                        title="City"
+                                                        options={[
+                                                            "Targu Mures",
+                                                            "Gheorgheni",
+                                                            "Brasov",
+                                                            "Cluj Napoca",
+                                                            "Miercurea Ciuc",
+                                                            "Sovata",
+                                                            "Bucuresti",
+                                                            "Tusnádfürdő",
+                                                            "Marosfő",
+                                                        ]}
+                                                    />
+                                                </div>
+                                                <Divider sx={{ mb: 2 }} />
+                                                <div>
+                                                    <TextCheckboxFilter
+                                                        title="Region"
+                                                        options={[
+                                                            "HR",
+                                                            "MS",
+                                                            "CV",
+                                                            "BV",
+                                                            "CJ",
+                                                            "B",
+                                                        ]}
+                                                    />
+                                                </div>
+                                                <button
+                                                    className="absolute top-0 right-0 m-2 text-gray font-bold text-xl"
+                                                    onClick={handleCloseModal}
+                                                >
+                                                    X
+                                                </button>
+                                            </Grid>
+                                        </Box>
+                                    </Modal>
+                                </div>
+                            )}
+                            <div className="pt-6 flex max-sm:w-9/12">
                                 <PropertySearchbar
                                     placeholder="Search..."
                                     value={searchTerm}
@@ -120,52 +234,63 @@ export default function Rent() {
                                 />
                             </div>
                         </Grid>
-                        <Grid item md={2} sx={{ pt: 2, pr: 4 }}>
-                            <div className="pb-5">
-                                <CheckboxFilter
-                                    title="Price"
-                                    options={[
-                                        "1-100",
-                                        "100-200",
-                                        "300-400",
-                                        "400-500",
-                                        "500+",
-                                    ]}
-                                />
-                            </div>
-                            <div className="pb-5">
-                                <TextCheckboxFilter
-                                    title="City"
-                                    options={[
-                                        "Targu Mures",
-                                        "Gheorgheni",
-                                        "Brasov",
-                                        "Cluj Napoca",
-                                        "Miercurea Ciuc",
-                                        "Sovata",
-                                        "Bucuresti",
-                                        "Tusnádfürdő",
-                                        "Marosfő",
-                                    ]}
-                                />
-                            </div>
-                            <div>
-                                <TextCheckboxFilter
-                                    title="Region"
-                                    options={[
-                                        "HR",
-                                        "MS",
-                                        "CV",
-                                        "BV",
-                                        "CJ",
-                                        "B",
-                                    ]}
-                                />
-                            </div>
-                        </Grid>
+                        {!isMdScreen && (
+                            <Grid
+                                item
+                                md={3}
+                                lg={3}
+                                xl={2}
+                                sx={{ pt: 2, pr: 4 }}
+                            >
+                                <div className="pb-5">
+                                    <CheckboxFilter
+                                        title="Price"
+                                        options={[
+                                            "1-100",
+                                            "100-200",
+                                            "300-400",
+                                            "400-500",
+                                            "500+",
+                                        ]}
+                                    />
+                                </div>
+                                <div className="pb-5">
+                                    <TextCheckboxFilter
+                                        title="City"
+                                        options={[
+                                            "Targu Mures",
+                                            "Gheorgheni",
+                                            "Brasov",
+                                            "Cluj Napoca",
+                                            "Miercurea Ciuc",
+                                            "Sovata",
+                                            "Bucuresti",
+                                            "Tusnádfürdő",
+                                            "Marosfő",
+                                        ]}
+                                    />
+                                </div>
+                                <div>
+                                    <TextCheckboxFilter
+                                        title="Region"
+                                        options={[
+                                            "HR",
+                                            "MS",
+                                            "CV",
+                                            "BV",
+                                            "CJ",
+                                            "B",
+                                        ]}
+                                    />
+                                </div>
+                            </Grid>
+                        )}
+
                         <Grid
                             container
-                            md={10}
+                            md={9}
+                            lg={9}
+                            xl={10}
                             sx={{ pt: 2, pb: 4 }}
                             spacing={3}
                         >
@@ -175,7 +300,7 @@ export default function Rent() {
                                     currentPage * itemsPerPage
                                 )
                                 .map((data) => (
-                                    <Grid item md={4}>
+                                    <Grid item xs={12} sm={6} md={6} lg={4}>
                                         <RentCard
                                             key={data.id}
                                             id={data.id}
