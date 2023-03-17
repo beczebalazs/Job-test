@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import constants from "../../constants/constants";
 import { LoginRequestType } from "../../types/login/LoginRequestType";
 import { LoginResponseType } from "../../types/login/LoginResponseType";
 
@@ -21,11 +20,11 @@ export const userLogin = createAsyncThunk(
     async (data: LoginRequestType, thunkAPI) => {
         try {
             const response = await axios.post<LoginResponseType>(
-                `${constants.API_URL}/log-in?apiKey=${process.env.REACT_APP_API_KEY}`,
+                `${process.env.REACT_APP_API_URL}/log-in?apiKey=${process.env.REACT_APP_API_KEY}`,
                 {
                     username: data.username,
                     password: data.password,
-                },
+                }
             );
             return response.data;
         } catch (error: any) {

@@ -40,7 +40,7 @@ export const getCurrentUser = createAsyncThunk(
                 },
             };
             const response = await axios.get<CurrentUserResponseType>(
-                `${constants.API_URL}/currentUser?apiKey=${process.env.REACT_APP_API_KEY}`,
+                `${process.env.REACT_APP_API_URL}/currentUser?apiKey=${process.env.REACT_APP_API_KEY}`,
                 config
             );
             return response.data;

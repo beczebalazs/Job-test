@@ -4,8 +4,6 @@ import { RootState } from "../../store";
 
 import axios from "axios";
 
-import constants from "../../constants/constants";
-
 interface RealEstatesState {
     realEstates: RealEstates[];
     loading: boolean;
@@ -37,7 +35,7 @@ export const fetchRealEstates = createAsyncThunk(
     async (_, thunkAPI) => {
         try {
             const response = await axios.get<RealEstates[]>(
-                `${constants.API_URL}/real-estates?apiKey=${process.env.REACT_APP_API_KEY}`
+                `${process.env.REACT_APP_API_URL}/real-estates?apiKey=${process.env.REACT_APP_API_KEY}`
             );
             return response.data;
         } catch (error: any) {
