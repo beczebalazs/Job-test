@@ -25,10 +25,11 @@ const LoginForm = () => {
     );
 
     useEffect(() => {
-        return () => {
-            // TODO: Implement error clean up
-        } 
-    }, [])
+        if (userToken !== null) {
+            navigate("/rent");
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const [usernameError, setUsernameError] = useState<InputStatesEnum>(
         InputStatesEnum.Initial
