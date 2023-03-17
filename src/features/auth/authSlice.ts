@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { LoginRequestType } from "../../types/login/LoginRequestType";
 import { LoginResponseType } from "../../types/login/LoginResponseType";
+import realEstatesSlice from "../real-estates/realestatesSlice";
 
 interface AuthState {
     loading: boolean;
@@ -36,7 +37,13 @@ export const userLogin = createAsyncThunk(
 const authSlice = createSlice({
     name: "auth",
     initialState,
-    reducers: {},
+    reducers: {
+        logout(state) {
+            state.error = null;
+            state.userToken = null;
+            state.loading = false;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(userLogin.pending, (state) => {
             state.loading = true;
@@ -54,4 +61,5 @@ const authSlice = createSlice({
     },
 });
 
+export const { logout } = authSlice.actions;
 export default authSlice;
