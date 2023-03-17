@@ -27,7 +27,8 @@ export default function Rent() {
     useEffect(() => {
         setLoading(true);
         dispatch(fetchRealEstates()).then(() => setLoading(false));
-    }, [dispatch]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const realEstates = useSelector(selectAllRealEstates);
 
