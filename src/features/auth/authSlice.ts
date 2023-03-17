@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { LoginRequestType } from "../../types/login/LoginRequestType";
 import { LoginResponseType } from "../../types/login/LoginResponseType";
-import realEstatesSlice from "../real-estates/realestatesSlice";
 
 interface AuthState {
     loading: boolean;
