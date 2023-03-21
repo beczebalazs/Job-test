@@ -7,8 +7,8 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import { Grid } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CircularProgress from "@mui/material/CircularProgress";
 
+import LoadingScreen from "../../../components/common/loading-screen";
 import { fetchRealEstates } from "../../../service/realEstates.service";
 import { AsyncDispatch } from "../../../store";
 import { selectAllRealEstates } from "../../../store/real-estates/realEstates.selector";
@@ -52,15 +52,7 @@ export default function RentDetailPage() {
     }
 
     if (loading) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <CircularProgress
-                    sx={{
-                        color: "gray",
-                    }}
-                ></CircularProgress>
-            </div>
-        );
+        return <LoadingScreen />;
     } else {
         let property;
         if (id) {

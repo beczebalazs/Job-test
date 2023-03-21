@@ -1,11 +1,12 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Grid, Pagination } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
+import { Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 
+import FooterPagination from "../../components/common/footer-pagination";
+import LoadingScreen from "../../components/common/loading-screen";
 import PropertySearchbar from "../../components/common/property-search-bar/PropertySearchbar";
 import RentCard from "../../components/common/rent-card/RentCard";
 import { fetchRealEstates } from "../../service/realEstates.service";
@@ -19,22 +20,16 @@ export default function FavouritesPage() {
     const [loading, setLoading] = useState(false);
 
     const favorite = useSelector(selectFavorites);
+    const dispatch: AsyncDispatch = useDispatch();
+    const realEstates = useSelector(selectAllRealEstates);
 
     const itemsPerPage = 15;
-
-    const dispatch: AsyncDispatch = useDispatch();
 
     useEffect(() => {
         setLoading(true);
         dispatch(fetchRealEstates()).then(() => setLoading(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const realEstates = useSelector(selectAllRealEstates);
-
-    const favoriteRealEstates = realEstates.filter((realEstate) =>
-        favorite.includes(realEstate.id)
-    );
 
     const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value);
@@ -49,6 +44,10 @@ export default function FavouritesPage() {
         setCurrentPage(1);
     };
 
+    const favoriteRealEstates = realEstates.filter((realEstate) =>
+        favorite.includes(realEstate.id)
+    );
+
     const filteredData = favoriteRealEstates.filter(
         (item) =>
             item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -56,15 +55,7 @@ export default function FavouritesPage() {
     );
 
     if (loading) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <CircularProgress
-                    sx={{
-                        color: "gray",
-                    }}
-                ></CircularProgress>
-            </div>
-        );
+        return <LoadingScreen />;
     } else {
         return (
             <div>
@@ -128,16 +119,11 @@ export default function FavouritesPage() {
                                 ))}
                         </Grid>
                     </Grid>
-                    <Pagination
-                        count={Math.ceil(filteredData.length / itemsPerPage)}
-                        page={currentPage}
-                        shape="rounded"
-                        onChange={handlePageChange}
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            my: 5,
-                        }}
+                    <FooterPagination
+                        dataLength={filteredData.length}
+                        itemsPerPage={itemsPerPage}
+                        currentPage={currentPage}
+                        handlePageChange={handlePageChange}
                     />
                 </Box>
             </div>

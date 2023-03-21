@@ -2,20 +2,21 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-import { Button, Divider, Grid, Modal, Pagination } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
+import { Button, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box } from "@mui/system";
 
-import CheckboxFilter from "../../components/common/filters/checkbox-filter/CheckboxFilter";
-import TextCheckboxFilter from "../../components/common/filters/text-checkbox-filter/TextCheckboxFilter";
+import FooterPagination from "../../components/common/footer-pagination";
+import LoadingScreen from "../../components/common/loading-screen";
 import PropertySearchbar from "../../components/common/property-search-bar/PropertySearchbar";
 import RentCard from "../../components/common/rent-card/RentCard";
+import { RentFilters } from "../../components/rent/rent-filters/RentFilters";
 import { fetchRealEstates } from "../../service/realEstates.service";
 import { AsyncDispatch } from "../../store";
 import { selectAllRealEstates } from "../../store/real-estates/realEstates.selector";
+import { RentModal } from "../../components/rent/rent-modal/RentModal";
 
 export default function RentPage() {
     const [searchTerm, setSearchTerm] = useState("");
@@ -23,20 +24,27 @@ export default function RentPage() {
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const dispatch: AsyncDispatch = useDispatch();
     const theme = useTheme();
+    const { search } = useLocation();
+
     const isMdScreen = useMediaQuery(theme.breakpoints.down("md"));
 
     const itemsPerPage = 15;
 
-    const dispatch: AsyncDispatch = useDispatch();
-
-    const { search } = useLocation();
+    const realEstates = useSelector(selectAllRealEstates);
 
     const queryParams = new URLSearchParams(search);
 
     const priceValues = queryParams.getAll("Price");
     const cityValues = queryParams.getAll("City");
     const regionValues = queryParams.getAll("Region");
+
+    useEffect(() => {
+        setLoading(true);
+        dispatch(fetchRealEstates()).then(() => setLoading(false));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleOpenModal = () => {
         setIsModalOpen(true);
@@ -45,14 +53,6 @@ export default function RentPage() {
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
-
-    useEffect(() => {
-        setLoading(true);
-        dispatch(fetchRealEstates()).then(() => setLoading(false));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const realEstates = useSelector(selectAllRealEstates);
 
     const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value);
@@ -97,15 +97,7 @@ export default function RentPage() {
     });
 
     if (loading) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <CircularProgress
-                    sx={{
-                        color: "gray",
-                    }}
-                ></CircularProgress>
-            </div>
-        );
+        return <LoadingScreen />;
     } else {
         return (
             <div>
@@ -145,84 +137,10 @@ export default function RentPage() {
                                     >
                                         Filters
                                     </Button>
-                                    <Modal
-                                        open={isModalOpen}
-                                        onClose={handleCloseModal}
-                                        sx={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                        }}
-                                    >
-                                        <Box
-                                            sx={{
-                                                backgroundColor: "#fff",
-                                                width: "80vw",
-                                                maxHeight: "80vh",
-                                                overflowY: "auto",
-                                                padding: "30px",
-                                                position: "relative",
-                                            }}
-                                        >
-                                            <Grid
-                                                item
-                                                md={3}
-                                                lg={3}
-                                                xl={2}
-                                                sx={{ pb: 2 }}
-                                            >
-                                                <div className="pb-5">
-                                                    <CheckboxFilter
-                                                        title="Price"
-                                                        options={[
-                                                            "1-100",
-                                                            "100-200",
-                                                            "300-400",
-                                                            "400-500",
-                                                            "500+",
-                                                        ]}
-                                                    />
-                                                </div>
-                                                <Divider sx={{ mb: 2 }} />
-                                                <div className="pb-5">
-                                                    <TextCheckboxFilter
-                                                        title="City"
-                                                        options={[
-                                                            "Targu Mures",
-                                                            "Gheorgheni",
-                                                            "Brasov",
-                                                            "Cluj Napoca",
-                                                            "Miercurea Ciuc",
-                                                            "Sovata",
-                                                            "Bucuresti",
-                                                            "Tusnádfürdő",
-                                                            "Marosfő",
-                                                        ]}
-                                                    />
-                                                </div>
-                                                <Divider sx={{ mb: 2 }} />
-                                                <div>
-                                                    <TextCheckboxFilter
-                                                        title="Region"
-                                                        options={[
-                                                            "HR",
-                                                            "MS",
-                                                            "CV",
-                                                            "BV",
-                                                            "CJ",
-                                                            "B",
-                                                        ]}
-                                                    />
-                                                </div>
-                                                <button
-                                                    className="absolute top-0 right-0 m-2 text-gray font-bold text-xl"
-                                                    onClick={handleCloseModal}
-                                                >
-                                                    X
-                                                </button>
-                                            </Grid>
-                                        </Box>
-                                    </Modal>
+                                    <RentModal
+                                        isModalOpen={isModalOpen}
+                                        handleCloseModal={handleCloseModal}
+                                    />
                                 </div>
                             )}
                             <div className="pt-6 flex max-sm:w-9/12">
@@ -241,50 +159,9 @@ export default function RentPage() {
                                 xl={2}
                                 sx={{ pt: 2, pr: 4 }}
                             >
-                                <div className="pb-5">
-                                    <CheckboxFilter
-                                        title="Price"
-                                        options={[
-                                            "1-100",
-                                            "100-200",
-                                            "300-400",
-                                            "400-500",
-                                            "500+",
-                                        ]}
-                                    />
-                                </div>
-                                <div className="pb-5">
-                                    <TextCheckboxFilter
-                                        title="City"
-                                        options={[
-                                            "Targu Mures",
-                                            "Gheorgheni",
-                                            "Brasov",
-                                            "Cluj Napoca",
-                                            "Miercurea Ciuc",
-                                            "Sovata",
-                                            "Bucuresti",
-                                            "Tusnádfürdő",
-                                            "Marosfő",
-                                        ]}
-                                    />
-                                </div>
-                                <div>
-                                    <TextCheckboxFilter
-                                        title="Region"
-                                        options={[
-                                            "HR",
-                                            "MS",
-                                            "CV",
-                                            "BV",
-                                            "CJ",
-                                            "B",
-                                        ]}
-                                    />
-                                </div>
+                                <RentFilters />
                             </Grid>
                         )}
-
                         <Grid
                             container
                             md={9}
@@ -316,16 +193,11 @@ export default function RentPage() {
                                 ))}
                         </Grid>
                     </Grid>
-                    <Pagination
-                        count={Math.ceil(filteredData.length / itemsPerPage)}
-                        page={currentPage}
-                        shape="rounded"
-                        onChange={handlePageChange}
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            my: 5,
-                        }}
+                    <FooterPagination
+                        dataLength={filteredData.length}
+                        itemsPerPage={itemsPerPage}
+                        currentPage={currentPage}
+                        handlePageChange={handlePageChange}
                     />
                 </Box>
             </div>
