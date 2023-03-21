@@ -2,6 +2,8 @@ import { Provider } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 
+import { persistor, store } from "./store";
+import { theme } from "./theme";
 import { ThemeProvider } from "@mui/material";
 
 import Navbar from "./components/common/navbar/Navbar";
@@ -10,8 +12,6 @@ import LoginPage from "./pages/login";
 import ProfilePage from "./pages/profile";
 import RentPage from "./pages/rent";
 import RentDetailPage from "./pages/rent/[rentID]";
-import { persistor, store } from "./store";
-import { theme } from "./theme";
 
 function App() {
     return (
