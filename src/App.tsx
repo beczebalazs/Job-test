@@ -1,17 +1,17 @@
+import { Provider } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 
 import { ThemeProvider } from "@mui/material";
-import { Provider } from "react-redux";
-import { persistor, store } from "./store";
 
-import Favourites from "./components/favourites/Favourites";
-import Login from "./components/login/Login";
-import Navbar from "./components/navbar/Navbar";
-import RentDetail from "./components/rent-detail/RentDetail";
-import Rent from "./components/rent/Rent";
+import Navbar from "./components/common/navbar/Navbar";
+import FavouritesPage from "./pages/favourites";
+import LoginPage from "./pages/login";
+import ProfilePage from "./pages/profile";
+import RentPage from "./pages/rent";
+import RentDetailPage from "./pages/rent/[rentID]";
+import { persistor, store } from "./store";
 import { theme } from "./theme";
-import Profile from "./components/profile/Profile";
 
 function App() {
     return (
@@ -26,17 +26,20 @@ function App() {
                                     path="/"
                                     element={<Navigate replace to="/rent" />}
                                 />
-                                <Route path="/rent" element={<Rent />} />
+                                <Route path="/rent" element={<RentPage />} />
                                 <Route
                                     path="/rent/:id"
-                                    element={<RentDetail />}
+                                    element={<RentDetailPage />}
                                 />
-                                <Route path="/login" element={<Login />} />
+                                <Route path="/login" element={<LoginPage />} />
                                 <Route
                                     path="/favorites"
-                                    element={<Favourites />}
+                                    element={<FavouritesPage />}
                                 />
-                                <Route path="/profile" element={<Profile />} />
+                                <Route
+                                    path="/profile"
+                                    element={<ProfilePage />}
+                                />
                             </Routes>
                         </main>
                     </ThemeProvider>
