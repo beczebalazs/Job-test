@@ -1,3 +1,3 @@
-import FilterSearchbar from "./FilterSearchbar";
+import { FilterSearchbar } from "./FilterSearchbar";
 
 export { FilterSearchbar as default };

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { Paper, Typography } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 
 import { InputStatesEnum } from "../../../constants/InputStatesEnum";
 
-export interface InputFieldProps {
+export interface Props {
     type?: string;
     placeholder?: string;
     onChange?: any;
@@ -25,7 +25,7 @@ export const noErrorStyle = {
     color: "gray",
 };
 
-const InputField = (props: InputFieldProps) => {
+const InputField: FC<Props> = (props) => {
     const { type, placeholder, onChange, error, helperText, onKeyDown } = props;
 
     const [formStyle, setFormStyle] = useState<Object>({});
@@ -50,14 +50,14 @@ const InputField = (props: InputFieldProps) => {
                 elevation={3}
             >
                 <InputBase
-                    sx={{ ml: 2, flex: 1 }}
+                    sx={{ flex: 1, ml: 2 }}
                     placeholder={placeholder}
                     type={type}
                     onChange={onChange}
                     onKeyDown={onKeyDown}
                 />
             </Paper>
-            <Typography sx={{ color: "red", fontSize: "0.8rem", pt: "5px" }}>
+            <Typography sx={{ pt: "5px", color: "red", fontSize: "0.8rem" }}>
                 {error === InputStatesEnum.Invalid && helperText}
             </Typography>
         </>

@@ -1,26 +1,26 @@
-import React from "react";
+import { ChangeEvent, FC } from "react";
 
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 
-interface PropertySearchbarProps {
-    placeholder: string;
-    onChange?: any;
+interface Props {
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     value?: string;
+    placeholder: string;
 }
 
-const PropertySearchbar = (props: PropertySearchbarProps) => {
+export const PropertySearchbar: FC<Props> = (props) => {
     const { placeholder, onChange, value } = props;
     return (
         <Paper
             component="form"
-            sx={{ display: "flex", width: 350, color: "grey" }}
+            sx={{ width: 350, display: "flex", color: "grey" }}
             elevation={5}
         >
             <InputBase
-                sx={{ ml: 2, flex: 1 }}
+                sx={{ flex: 1, ml: 2 }}
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
@@ -31,5 +31,3 @@ const PropertySearchbar = (props: PropertySearchbarProps) => {
         </Paper>
     );
 };
-
-export default PropertySearchbar;

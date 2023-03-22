@@ -1,9 +1,11 @@
+import { FC } from "react";
+
 import { Divider } from "@mui/material";
 
 import CheckboxFilter from "../../common/filters/checkbox-filter/CheckboxFilter";
 import TextCheckboxFilter from "../../common/filters/text-checkbox-filter/TextCheckboxFilter";
 
-export const RentFilters = () => {
+export const RentFilters: FC = () => {
     return (
         <div>
             <div className="pb-5">
@@ -12,7 +14,7 @@ export const RentFilters = () => {
                     options={["1-100", "100-200", "300-400", "400-500", "500+"]}
                 />
             </div>
-            <Divider sx={{ mb: 2, display: { md: "none" } }} />
+            <Divider sx={{ display: { md: "none" }, mb: 2 }} />
             <div className="pb-5">
                 <TextCheckboxFilter
                     title="City"
@@ -29,7 +31,7 @@ export const RentFilters = () => {
                     ]}
                 />
             </div>
-            <Divider sx={{ mb: 2, display: { md: "none" } }} />
+            <Divider sx={{ display: { md: "none" }, mb: 2 }} />
             <div>
                 <TextCheckboxFilter
                     title="Region"

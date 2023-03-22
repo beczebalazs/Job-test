@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -10,27 +10,27 @@ import {
 } from "@mui/material";
 
 import { checkboxStyle } from "../../../../utils/commonFunctions";
-import FilterSearchbar from "./filter-search-bar/FilterSearchbar";
+import FilterSearchbar from "./filter-search-bar";
 
-interface TextCheckboxFilterProps {
+interface Props {
     title: string;
     options: Array<string>;
 }
 
-const TextCheckboxFilter = (props: TextCheckboxFilterProps) => {
+const TextCheckboxFilter: FC<Props> = (props) => {
     const { title, options } = props;
 
     const [searchValue, setSearchValue] = useState("");
 
-    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(event.target.value);
-    };
+    const navigate = useNavigate();
 
     const filteredOptions = options.filter((option) =>
         option.toLowerCase().includes(searchValue.toLowerCase())
     );
 
-    const navigate = useNavigate();
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchValue(event.target.value);
+    };
 
     const handleCheckboxChange = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -53,23 +53,23 @@ const TextCheckboxFilter = (props: TextCheckboxFilterProps) => {
 
     return (
         <Paper elevation={8} sx={{ px: 2, py: 2 }}>
-            <Typography sx={{ fontWeight: 600, fontSize: "1.25rem", pb: 1 }}>
+            <Typography sx={{ pb: 1, fontWeight: 600, fontSize: "1.25rem" }}>
                 {title}
             </Typography>
             <div className="pb-3">
                 <FilterSearchbar
-                    value={searchValue}
                     onChange={handleSearchChange}
+                    value={searchValue}
                 />
             </div>
             <FormGroup
                 sx={{
-                    pt: 2,
-                    display: "flex",
+                    maxHeight: "200px",
                     overflow: "scroll",
                     overflowX: "hidden",
-                    maxHeight: "200px",
+                    display: "flex",
                     flexWrap: "nowrap",
+                    pt: 2,
                 }}
             >
                 {filteredOptions.map((item) => (

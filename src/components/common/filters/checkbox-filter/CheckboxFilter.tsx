@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Checkbox from "@mui/material/Checkbox/Checkbox";
@@ -8,12 +9,12 @@ import Typography from "@mui/material/Typography";
 
 import { checkboxStyle } from "../../../../utils/commonFunctions";
 
-interface CheckboxFilterProps {
+interface Props {
     title: string;
     options: Array<String>;
 }
 
-const CheckboxFilter = (props: CheckboxFilterProps) => {
+const CheckboxFilter: FC<Props> = (props) => {
     const { title, options } = props;
 
     const navigate = useNavigate();
@@ -47,7 +48,7 @@ const CheckboxFilter = (props: CheckboxFilterProps) => {
             >
                 {title}
             </Typography>
-            <FormGroup sx={{ pt: 2, display: "flex" }}>
+            <FormGroup sx={{ display: "flex", pt: 2 }}>
                 {options.map((item) => (
                     <FormControlLabel
                         control={

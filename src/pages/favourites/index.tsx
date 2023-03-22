@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Grid } from "@mui/material";
@@ -7,14 +7,14 @@ import { Box } from "@mui/system";
 
 import FooterPagination from "../../components/common/footer-pagination";
 import LoadingScreen from "../../components/common/loading-screen";
-import PropertySearchbar from "../../components/common/property-search-bar/PropertySearchbar";
-import RentCard from "../../components/common/rent-card/RentCard";
+import PropertySearchbar from "../../components/common/property-search-bar";
+import RentCard from "../../components/common/rent-card";
 import { fetchRealEstates } from "../../service/realEstates.service";
 import { AsyncDispatch } from "../../store";
 import { selectFavorites } from "../../store/favourites/favourites.selector";
 import { selectAllRealEstates } from "../../store/real-estates/realEstates.selector";
 
-export default function FavouritesPage() {
+const FavouritesPage: FC = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(false);
@@ -74,18 +74,18 @@ export default function FavouritesPage() {
                             </Typography>
                             <Typography
                                 sx={{
+                                    pl: 0.2,
                                     fontWeight: 500,
                                     fontSize: "1rem",
-                                    pl: 0.2,
                                 }}
                             >
                                 {filteredData.length} favorites
                             </Typography>
                             <div className="pt-6 flex max-sm:w-9/12">
                                 <PropertySearchbar
-                                    placeholder="Search..."
-                                    value={searchTerm}
                                     onChange={handleSearchChange}
+                                    value={searchTerm}
+                                    placeholder="Search..."
                                 />
                             </div>
                         </Grid>
@@ -120,13 +120,15 @@ export default function FavouritesPage() {
                         </Grid>
                     </Grid>
                     <FooterPagination
-                        dataLength={filteredData.length}
-                        itemsPerPage={itemsPerPage}
                         currentPage={currentPage}
                         handlePageChange={handlePageChange}
+                        dataLength={filteredData.length}
+                        itemsPerPage={itemsPerPage}
                     />
                 </Box>
             </div>
         );
     }
-}
+};
+
+export default FavouritesPage;

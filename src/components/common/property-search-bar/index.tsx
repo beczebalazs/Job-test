@@ -1,3 +1,3 @@
-import PropertySearchbar from "./PropertySearchbar";
+import { PropertySearchbar } from "./PropertySearchbar";
 
 export { PropertySearchbar as default };

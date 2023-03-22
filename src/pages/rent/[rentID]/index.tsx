@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { FC, MouseEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -14,42 +14,41 @@ import { AsyncDispatch } from "../../../store";
 import { selectAllRealEstates } from "../../../store/real-estates/realEstates.selector";
 import { IRealEstates } from "../../../types/realEstates.type";
 
-export default function RentDetailPage() {
+const RentDetailPage: FC = () => {
     const [isImageOpen, setIsImageOpen] = useState(false);
-    const modalRef = useRef<HTMLDivElement>(null);
-
     const [loading, setLoading] = useState(false);
+
+    const modalRef = useRef<HTMLDivElement>(null);
     const dispatch: AsyncDispatch = useDispatch();
 
     const { id } = useParams<{ id: string }>();
+    const realEstates = useSelector(selectAllRealEstates);
 
     useEffect(() => {
         setLoading(true);
         dispatch(fetchRealEstates()).then(() => setLoading(false));
     }, [dispatch]);
 
-    const realEstates = useSelector(selectAllRealEstates);
-
-    function getPropertyById(id: string): IRealEstates | undefined {
+    const getPropertyById = (id: string): IRealEstates | undefined => {
         return realEstates.find((property) => property.id === id);
-    }
+    };
 
-    function handleImageClick() {
+    const handleImageClick = () => {
         setIsImageOpen(true);
-    }
+    };
 
-    function handleCloseModal(event: MouseEvent) {
+    const handleCloseModal = (event: MouseEvent) => {
         setIsImageOpen(false);
-    }
+    };
 
-    function handleOutsideClick(event: MouseEvent) {
+    const handleOutsideClick = (event: MouseEvent) => {
         if (
             modalRef.current &&
             !modalRef.current.contains(event.target as Node)
         ) {
             handleCloseModal(event);
         }
-    }
+    };
 
     if (loading) {
         return <LoadingScreen />;
@@ -191,4 +190,6 @@ export default function RentDetailPage() {
             </div>
         );
     }
-}
+};
+
+export default RentDetailPage;

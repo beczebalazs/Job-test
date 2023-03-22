@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -12,9 +13,22 @@ import {
     addFavorite,
     removeFavorite,
 } from "../../../store/favourites/favourites.slice";
-import { IRealEstates } from "../../../types/realEstates.type";
 
-export default function RentCard(props: IRealEstates) {
+interface Props {
+    id: string;
+    image?: string;
+    title: string;
+    description: string;
+    price: number;
+    region: string;
+    city: string;
+    address: string;
+    comission?: number;
+    phone?: number;
+    email?: string;
+}
+
+export const RentCard: FC<Props> = (props) => {
     const { image, title, price, city, address, id } = props;
 
     const dispatch = useDispatch();
@@ -41,11 +55,11 @@ export default function RentCard(props: IRealEstates) {
             <Paper
                 elevation={8}
                 sx={{
+                    borderRadius: "5px",
                     display: "flex",
+                    flexDirection: "column",
                     px: 2.8,
                     pt: 2,
-                    flexDirection: "column",
-                    borderRadius: "5px",
                 }}
             >
                 {image !== undefined && (
@@ -110,4 +124,4 @@ export default function RentCard(props: IRealEstates) {
             </Paper>
         </div>
     );
-}
+};

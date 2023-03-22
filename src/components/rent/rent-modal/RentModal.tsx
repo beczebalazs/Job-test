@@ -4,12 +4,12 @@ import { Box } from "@mui/system";
 import { RentFilters } from "../rent-filters/RentFilters";
 
 interface Props {
-    isModalOpen: boolean;
     handleCloseModal: () => void;
+    isModalOpen: boolean;
 }
 
 export const RentModal: FC<Props> = (props) => {
-    const { isModalOpen, handleCloseModal } = props;
+    const { handleCloseModal, isModalOpen } = props;
 
     return (
         <Modal
@@ -23,12 +23,12 @@ export const RentModal: FC<Props> = (props) => {
         >
             <Box
                 sx={{
-                    backgroundColor: "#fff",
+                    position: "relative",
                     width: "80vw",
                     maxHeight: "80vh",
+                    backgroundColor: "#fff",
                     overflowY: "auto",
                     padding: "30px",
-                    position: "relative",
                 }}
             >
                 <Grid item md={3} lg={3} xl={2} sx={{ pb: 2 }}>

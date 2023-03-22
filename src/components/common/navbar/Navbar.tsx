@@ -1,15 +1,14 @@
+import { FC } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { Avatar } from "@mui/material";
 
-import { useAppSelector } from "../../../hooks/useTypedSelector";
 import companyLogo from "../../../images/company-logo.png";
-import { RootState } from "../../../store";
+import { authTokenSelect } from "../../../store/auth/auth.selector";
 
-export default function Navbar() {
-    const authToken = useAppSelector(
-        (state: RootState) => state.auth.userToken
-    );
+export const Navbar: FC = () => {
+    const authToken = useSelector(authTokenSelect);
 
     return (
         <div className="fixed top-0 left-0 right-0 h-30 bg-white backdrop-blur-md z-50 shadow-2xl">
@@ -43,4 +42,4 @@ export default function Navbar() {
             </nav>
         </div>
     );
-}
+};

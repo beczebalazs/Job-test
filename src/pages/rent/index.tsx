@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
@@ -10,15 +10,15 @@ import { Box } from "@mui/system";
 
 import FooterPagination from "../../components/common/footer-pagination";
 import LoadingScreen from "../../components/common/loading-screen";
-import PropertySearchbar from "../../components/common/property-search-bar/PropertySearchbar";
-import RentCard from "../../components/common/rent-card/RentCard";
+import PropertySearchbar from "../../components/common/property-search-bar";
+import RentCard from "../../components/common/rent-card";
 import { RentFilters } from "../../components/rent/rent-filters/RentFilters";
+import { RentModal } from "../../components/rent/rent-modal/RentModal";
 import { fetchRealEstates } from "../../service/realEstates.service";
 import { AsyncDispatch } from "../../store";
 import { selectAllRealEstates } from "../../store/real-estates/realEstates.selector";
-import { RentModal } from "../../components/rent/rent-modal/RentModal";
 
-export default function RentPage() {
+const RentPage: FC = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(false);
@@ -116,9 +116,9 @@ export default function RentPage() {
                             </Typography>
                             <Typography
                                 sx={{
+                                    pl: 0.2,
                                     fontWeight: 500,
                                     fontSize: "1rem",
-                                    pl: 0.2,
                                 }}
                             >
                                 {filteredData.length} results
@@ -129,25 +129,25 @@ export default function RentPage() {
                                         variant="outlined"
                                         sx={{
                                             width: "100%",
-                                            color: "black",
                                             border: "1px solid grey",
                                             backgroundColor: "#fff",
+                                            color: "black",
                                         }}
                                         onClick={handleOpenModal}
                                     >
                                         Filters
                                     </Button>
                                     <RentModal
-                                        isModalOpen={isModalOpen}
                                         handleCloseModal={handleCloseModal}
+                                        isModalOpen={isModalOpen}
                                     />
                                 </div>
                             )}
                             <div className="pt-6 flex max-sm:w-9/12">
                                 <PropertySearchbar
-                                    placeholder="Search..."
-                                    value={searchTerm}
                                     onChange={handleSearchChange}
+                                    value={searchTerm}
+                                    placeholder="Search..."
                                 />
                             </div>
                         </Grid>
@@ -194,13 +194,15 @@ export default function RentPage() {
                         </Grid>
                     </Grid>
                     <FooterPagination
-                        dataLength={filteredData.length}
-                        itemsPerPage={itemsPerPage}
                         currentPage={currentPage}
                         handlePageChange={handlePageChange}
+                        dataLength={filteredData.length}
+                        itemsPerPage={itemsPerPage}
                     />
                 </Box>
             </div>
         );
     }
-}
+};
+
+export default RentPage;

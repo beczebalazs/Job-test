@@ -1,15 +1,15 @@
-import React from "react";
+import React, { FC } from "react";
 
 import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 
-interface FilterSearchbarProps {
-    value: string;
+interface Props {
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    value: string;
 }
 
-const FilterSearchbar = (props: FilterSearchbarProps) => {
-    const { value, onChange } = props;
+export const FilterSearchbar: FC<Props> = (props) => {
+    const { onChange, value } = props;
     return (
         <Paper
             component="form"
@@ -17,7 +17,7 @@ const FilterSearchbar = (props: FilterSearchbarProps) => {
             elevation={5}
         >
             <InputBase
-                sx={{ ml: 2, flex: 1 }}
+                sx={{ flex: 1, ml: 2 }}
                 placeholder="Search..."
                 value={value}
                 onChange={onChange}
@@ -25,5 +25,3 @@ const FilterSearchbar = (props: FilterSearchbarProps) => {
         </Paper>
     );
 };
-
-export default FilterSearchbar;

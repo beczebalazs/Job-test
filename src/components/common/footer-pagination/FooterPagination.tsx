@@ -1,15 +1,16 @@
-import { FC, ChangeEvent } from "react";
+import { ChangeEvent, FC } from "react";
+
 import { Pagination } from "@mui/material";
 
 interface Props {
+    handlePageChange: (event: ChangeEvent<unknown>, value: number) => void;
+    currentPage: number;
     dataLength: number;
     itemsPerPage: number;
-    currentPage: number;
-    handlePageChange: (event: ChangeEvent<unknown>, value: number) => void;
 }
 
 export const FooterPagination: FC<Props> = (props) => {
-    const { dataLength, itemsPerPage, currentPage, handlePageChange } = props;
+    const { currentPage, handlePageChange, dataLength, itemsPerPage } = props;
 
     return (
         <Pagination
