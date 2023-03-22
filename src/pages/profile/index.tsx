@@ -13,7 +13,6 @@ import {
     getCurrentUser,
     updateCurrentUser,
 } from "../../service/currentUser.service";
-import { authTokenSelect } from "../../store/auth/auth.selector";
 import { logout } from "../../store/auth/auth.slice";
 import { currentUser } from "../../store/current-user/currentUser.selector";
 import { ICurrentUserResponse } from "../../types/currentUser.types";
@@ -29,7 +28,6 @@ const ProfilePage = () => {
     const navigate = useNavigate();
 
     const currentUserState = useSelector(currentUser);
-    const authToken = useSelector(authTokenSelect);
 
     const [isEditable, setIsEditable] = useState(false);
     const [readOnly, setReadOnly] = useState(true);
