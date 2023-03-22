@@ -10,6 +10,7 @@ import { Box } from "@mui/system";
 
 import FooterPagination from "../../components/common/footer-pagination";
 import LoadingScreen from "../../components/common/loading-screen";
+import Navbar from "../../components/common/navbar";
 import PropertySearchbar from "../../components/common/property-search-bar";
 import RentCard from "../../components/common/rent-card";
 import { RentFilters } from "../../components/rent/rent-filters/RentFilters";
@@ -101,6 +102,7 @@ const RentPage: FC = () => {
     } else {
         return (
             <div>
+                <Navbar />
                 <Box
                     sx={{
                         mx: { xs: 4, md: 8, xl: 20 },

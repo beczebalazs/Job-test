@@ -6,6 +6,7 @@ import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 
+import Navbar from "../../components/common/navbar";
 import { MAIN_COLOR } from "../../constants";
 import { useAppDispatch } from "../../hooks/useTypedSelector";
 import {
@@ -131,171 +132,162 @@ const ProfilePage = () => {
     return (
         // TODO: Set textfield to disabled when not in edit mode
         <div className="flex items-center justify-center h-screen max-sm:mt-40">
-            {authToken === null ? (
-                <Typography>You need to be logged in</Typography>
-            ) : (
-                <Paper
-                    elevation={8}
+            <Navbar />
+            <Paper
+                elevation={8}
+                sx={{
+                    width: "fit-content",
+                    py: 3,
+                    px: 5,
+                    borderRadius: 2,
+                    marginBottom: "150px",
+                    minWidth: "20%",
+                }}
+            >
+                <Grid
+                    container
                     sx={{
-                        width: "fit-content",
-                        py: 3,
-                        px: 5,
-                        borderRadius: 2,
-                        marginBottom: "150px",
-                        minWidth: "20%",
+                        justifyContent: "center",
+                        alignContent: "center",
+                        alignItems: "center",
+                    }}
+                    direction="column"
+                >
+                    <Grid item>
+                        <Typography sx={{ fontSize: "24px", fontWeight: 600 }}>
+                            {currentData.firstName} {currentData.lastName}
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography sx={{ fontWeight: 500, fontSize: "16px" }}>
+                            age {currentData.age}
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography sx={{ fontWeight: 300, fontSize: "14px" }}>
+                            Role: {currentData.role}
+                        </Typography>
+                    </Grid>
+                    <Grid item>{genderEval()}</Grid>
+                </Grid>
+                <Grid
+                    container
+                    direction="column"
+                    sx={{
+                        justifyContent: "center",
+                        alignContent: "center",
+                        alignItems: "center",
+                        pt: 5,
                     }}
                 >
-                    <Grid
-                        container
-                        sx={{
-                            justifyContent: "center",
-                            alignContent: "center",
-                            alignItems: "center",
-                        }}
-                        direction="column"
-                    >
-                        <Grid item>
-                            <Typography
-                                sx={{ fontSize: "24px", fontWeight: 600 }}
-                            >
-                                {currentData.firstName} {currentData.lastName}
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography
-                                sx={{ fontWeight: 500, fontSize: "16px" }}
-                            >
-                                age {currentData.age}
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography
-                                sx={{ fontWeight: 300, fontSize: "14px" }}
-                            >
-                                Role: {currentData.role}
-                            </Typography>
-                        </Grid>
-                        <Grid item>{genderEval()}</Grid>
+                    <Grid item sx={{ ...generalStyle, pt: 0 }}>
+                        <TextField
+                            id="email"
+                            label="Email"
+                            value={email}
+                            error={emailError}
+                            helperText={
+                                emailError ? "Invalid email format" : ""
+                            }
+                            InputProps={{
+                                readOnly: readOnly,
+                            }}
+                            fullWidth
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
                     </Grid>
-                    <Grid
-                        container
-                        direction="column"
-                        sx={{
-                            justifyContent: "center",
-                            alignContent: "center",
-                            alignItems: "center",
-                            pt: 5,
-                        }}
-                    >
-                        <Grid item sx={{ ...generalStyle, pt: 0 }}>
-                            <TextField
-                                id="email"
-                                label="Email"
-                                value={email}
-                                error={emailError}
-                                helperText={
-                                    emailError ? "Invalid email format" : ""
-                                }
-                                InputProps={{
-                                    readOnly: readOnly,
-                                }}
-                                fullWidth
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item sx={generalStyle}>
-                            <TextField
-                                id="username"
-                                label="Username"
-                                value={username}
-                                InputProps={{
-                                    readOnly: readOnly,
-                                }}
-                                fullWidth
-                                onChange={(e) => setUsername(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item sx={generalStyle}>
-                            <TextField
-                                id="firstName"
-                                label="First name"
-                                value={firstName}
-                                InputProps={{
-                                    readOnly: readOnly,
-                                }}
-                                fullWidth
-                                onChange={(e) => setFirstName(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item sx={generalStyle}>
-                            <TextField
-                                id="lastName"
-                                label="Last name"
-                                value={lastName}
-                                InputProps={{
-                                    readOnly: readOnly,
-                                }}
-                                fullWidth
-                                onChange={(e) => setLastName(e.target.value)}
-                            />
-                        </Grid>
+                    <Grid item sx={generalStyle}>
+                        <TextField
+                            id="username"
+                            label="Username"
+                            value={username}
+                            InputProps={{
+                                readOnly: readOnly,
+                            }}
+                            fullWidth
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
                     </Grid>
-                    <Grid
-                        container
-                        sx={{
-                            justifyContent: "center",
-                            alignContent: "center",
-                            alignItems: "center",
-                            pt: 5,
-                        }}
-                    >
-                        {!isEditable ? (
+                    <Grid item sx={generalStyle}>
+                        <TextField
+                            id="firstName"
+                            label="First name"
+                            value={firstName}
+                            InputProps={{
+                                readOnly: readOnly,
+                            }}
+                            fullWidth
+                            onChange={(e) => setFirstName(e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item sx={generalStyle}>
+                        <TextField
+                            id="lastName"
+                            label="Last name"
+                            value={lastName}
+                            InputProps={{
+                                readOnly: readOnly,
+                            }}
+                            fullWidth
+                            onChange={(e) => setLastName(e.target.value)}
+                        />
+                    </Grid>
+                </Grid>
+                <Grid
+                    container
+                    sx={{
+                        justifyContent: "center",
+                        alignContent: "center",
+                        alignItems: "center",
+                        pt: 5,
+                    }}
+                >
+                    {!isEditable ? (
+                        <Button
+                            variant="contained"
+                            sx={{ bgcolor: MAIN_COLOR }}
+                            onClick={() => handleButtonClick("edit")}
+                        >
+                            EDIT
+                        </Button>
+                    ) : (
+                        <Grid
+                            container
+                            sx={{ justifyContent: "space-between" }}
+                        >
                             <Button
                                 variant="contained"
-                                sx={{ bgcolor: MAIN_COLOR }}
-                                onClick={() => handleButtonClick("edit")}
+                                color="success"
+                                sx={{ width: "40%" }}
+                                onClick={() => handleButtonClick("save")}
                             >
-                                EDIT
+                                Save
                             </Button>
-                        ) : (
-                            <Grid
-                                container
-                                sx={{ justifyContent: "space-between" }}
+                            <Button
+                                variant="contained"
+                                color="error"
+                                sx={{ bgcolor: "red", width: "40%" }}
+                                onClick={() => handleButtonClick("discard")}
                             >
-                                <Button
-                                    variant="contained"
-                                    color="success"
-                                    sx={{ width: "40%" }}
-                                    onClick={() => handleButtonClick("save")}
-                                >
-                                    Save
-                                </Button>
-                                <Button
-                                    variant="contained"
-                                    color="error"
-                                    sx={{ bgcolor: "red", width: "40%" }}
-                                    onClick={() => handleButtonClick("discard")}
-                                >
-                                    Discard
-                                </Button>
-                            </Grid>
-                        )}
-                    </Grid>
-                    <Grid
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignContent: "center",
-                            alignItems: "center",
-                            pt: 2,
-                        }}
-                    >
-                        <Button variant="contained" onClick={handleLogoutClick}>
-                            Logout
-                        </Button>
-                    </Grid>
-                </Paper>
-            )}
+                                Discard
+                            </Button>
+                        </Grid>
+                    )}
+                </Grid>
+                <Grid
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignContent: "center",
+                        alignItems: "center",
+                        pt: 2,
+                    }}
+                >
+                    <Button variant="contained" onClick={handleLogoutClick}>
+                        Logout
+                    </Button>
+                </Grid>
+            </Paper>
         </div>
     );
 };

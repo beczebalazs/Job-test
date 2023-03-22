@@ -10,6 +10,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 
 import InputField from "../../components/common/input-field/InputField";
+import Navbar from "../../components/common/navbar";
 import { MAIN_COLOR } from "../../constants";
 import { InputStatesEnum } from "../../constants/InputStatesEnum";
 import { useAppDispatch } from "../../hooks/useTypedSelector";
@@ -106,6 +107,7 @@ const LoginPage = () => {
 
     return (
         <Grid container component="main" sx={{ height: "100vh" }}>
+            <Navbar />
             {/* TODO: When user is logged in and tries to reach this page redirect to /rent */}
             <Grid
                 item
