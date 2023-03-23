@@ -1,6 +1,7 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { v4 as uuid } from "uuid";
 
 import { Button, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -166,6 +167,7 @@ const RentPage: FC = () => {
                         )}
                         <Grid
                             container
+                            item
                             md={9}
                             lg={9}
                             xl={10}
@@ -178,9 +180,16 @@ const RentPage: FC = () => {
                                     currentPage * itemsPerPage
                                 )
                                 .map((data) => (
-                                    <Grid item xs={12} sm={6} md={6} lg={4}>
+                                    <Grid
+                                        item
+                                        key={uuid()}
+                                        xs={12}
+                                        sm={6}
+                                        md={6}
+                                        lg={4}
+                                    >
                                         <RentCard
-                                            key={data.id}
+                                            key={uuid()}
                                             id={data.id}
                                             title={data.title}
                                             description={data.description}

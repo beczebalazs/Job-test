@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuid } from "uuid";
 
 import {
     Checkbox,
@@ -74,6 +75,7 @@ const TextCheckboxFilter: FC<Props> = (props) => {
             >
                 {filteredOptions.map((item) => (
                     <FormControlLabel
+                        key={uuid()}
                         control={
                             <Checkbox
                                 sx={checkboxStyle}

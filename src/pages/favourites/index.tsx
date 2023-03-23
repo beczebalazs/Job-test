@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuid } from "uuid";
 
 import { Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -85,6 +86,7 @@ const FavouritesPage: FC = () => {
                     </Grid>
                     <Grid
                         container
+                        item
                         md={12}
                         xs={12}
                         sx={{ pt: 2, pb: 4 }}
@@ -96,7 +98,14 @@ const FavouritesPage: FC = () => {
                                 currentPage * itemsPerPage
                             )
                             .map((data) => (
-                                <Grid item xs={12} sm={6} md={4} lg={3}>
+                                <Grid
+                                    key={uuid()}
+                                    item
+                                    xs={12}
+                                    sm={6}
+                                    md={4}
+                                    lg={3}
+                                >
                                     <RentCard
                                         key={data.id}
                                         id={data.id}
