@@ -1,3 +1,3 @@
 import { RentCard } from "./RentCard";
 
-export { RentCard as default };
+export default RentCard;

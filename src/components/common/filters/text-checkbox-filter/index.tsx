@@ -1,3 +1,3 @@
 import TextCheckboxFilter from "./TextCheckboxFilter";
 
-export { TextCheckboxFilter as default };
+export default TextCheckboxFilter;
