@@ -6,7 +6,7 @@ import { Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 
-import FooterPagination from "../../components/common/footer-pagination";
+import FooterPagination from "@components/common/footer-pagination";
 import Navbar from "../../components/common/navbar";
 import PropertySearchbar from "../../components/common/property-search-bar";
 import RentCard from "../../components/common/rent-card";
