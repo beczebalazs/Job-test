@@ -1,5 +1,6 @@
-import { Grid, TextField } from "@mui/material";
 import { FC, useEffect } from "react";
+
+import { Grid, TextField } from "@mui/material";
 
 interface Props {
     email: string;
@@ -41,6 +42,7 @@ const InputGroup: FC<Props> = (props) => {
                         id="email"
                         label="Email"
                         value={props.email}
+                        disabled={props.readOnly ? true : false}
                         error={props.emailError}
                         helperText={
                             props.emailError ? "Invalid email format" : ""
@@ -56,6 +58,7 @@ const InputGroup: FC<Props> = (props) => {
                     <TextField
                         id="username"
                         label="Username"
+                        disabled={props.readOnly ? true : false}
                         value={props.username}
                         InputProps={{
                             readOnly: props.readOnly,
@@ -68,6 +71,7 @@ const InputGroup: FC<Props> = (props) => {
                     <TextField
                         id="firstName"
                         label="First name"
+                        disabled={props.readOnly ? true : false}
                         value={props.firstName}
                         InputProps={{
                             readOnly: props.readOnly,
@@ -80,6 +84,7 @@ const InputGroup: FC<Props> = (props) => {
                     <TextField
                         id="lastName"
                         label="Last name"
+                        disabled={props.readOnly ? true : false}
                         value={props.lastName}
                         InputProps={{
                             readOnly: props.readOnly,

@@ -1,16 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import Navbar from '@components/common/navbar';
-import ButtonGroup from '@components/profile/button-group';
-import InputGroup from '@components/profile/input-group';
-import UserInfo from '@components/profile/user-info';
-import { ICurrentUserResponse } from '@customTypes/currentUser.types';
-import { useAppDispatch } from '@hooks/useTypedSelector';
-import { Paper } from '@mui/material';
-import { getCurrentUser } from '@service/currentUser.service';
-import { currentUser } from '@store/current-user/currentUser.selector';
+import Navbar from "@components/common/navbar";
+import ButtonGroup from "@components/profile/button-group";
+import InputGroup from "@components/profile/input-group";
+import UserInfo from "@components/profile/user-info";
+import { ICurrentUserResponse } from "@customTypes/currentUser.types";
+import { useAppDispatch } from "@hooks/useTypedSelector";
+import { Paper } from "@mui/material";
+import { getCurrentUser } from "@service/currentUser.service";
+import { currentUser } from "@store/current-user/currentUser.selector";
 
 const ProfilePage = () => {
     const dispatch = useAppDispatch();
@@ -61,7 +60,6 @@ const ProfilePage = () => {
     }, [currentUserState]);
 
     return (
-        // TODO: Set textfield to disabled when not in edit mode
         <>
             <div>
                 <Navbar />

@@ -1,14 +1,14 @@
 import { FC } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { MAIN_COLOR } from "@constants/index";
-import { Grid, Button } from "@mui/material";
-import { isEmail } from "@utils/commonFunctions";
 import { useAppDispatch } from "@hooks/useTypedSelector";
+import { Button, Grid } from "@mui/material";
 import { updateCurrentUser } from "@service/currentUser.service";
-import { useSelector } from "react-redux";
-import { currentUser } from "@store/current-user/currentUser.selector";
 import { logout } from "@store/auth/auth.slice";
-import { useNavigate } from "react-router-dom";
+import { currentUser } from "@store/current-user/currentUser.selector";
+import { isEmail } from "@utils/commonFunctions";
 
 interface Props {
     isEditable: boolean;
@@ -105,19 +105,19 @@ const ButtonGroup: FC<Props> = (props) => {
                         </Button>
                     </Grid>
                 )}
-                <Grid
-                    sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignContent: "center",
-                        alignItems: "center",
-                        pt: 2,
-                    }}
-                >
-                    <Button variant="contained" onClick={handleLogoutClick}>
-                        Logout
-                    </Button>
-                </Grid>
+            </Grid>
+            <Grid
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignContent: "center",
+                    alignItems: "center",
+                    pt: 2,
+                }}
+            >
+                <Button variant="contained" onClick={handleLogoutClick}>
+                    Logout
+                </Button>
             </Grid>
         </>
     );

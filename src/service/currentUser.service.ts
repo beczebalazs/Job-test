@@ -43,7 +43,7 @@ export const updateCurrentUser = createAsyncThunk(
                 },
             };
             const response = await axios.patch<IUpdateCurrentUserResponse>(
-                `${process.env.API_URL}/currentUser?apiKey=${process.env.REACT_APP_API_KEY}`,
+                `${process.env.REACT_APP_API_URL}/currentUser?apiKey=${process.env.REACT_APP_API_KEY}`,
                 {
                     email: data.email,
                     username: data.username,
