@@ -1,31 +1,19 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import FemaleIcon from "@mui/icons-material/Female";
-import MaleIcon from "@mui/icons-material/Male";
-import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
-
-import Navbar from "../../components/common/navbar";
-import { MAIN_COLOR } from "../../constants";
-import { useAppDispatch } from "../../hooks/useTypedSelector";
-import {
-    getCurrentUser,
-    updateCurrentUser,
-} from "../../service/currentUser.service";
-import { logout } from "../../store/auth/auth.slice";
-import { currentUser } from "../../store/current-user/currentUser.selector";
-import { ICurrentUserResponse } from "../../types/currentUser.types";
-import { isEmail } from "../../utils/commonFunctions";
-
-export const generalStyle = {
-    width: "100%",
-    pt: 3,
-};
+import Navbar from '@components/common/navbar';
+import ButtonGroup from '@components/profile/button-group';
+import InputGroup from '@components/profile/input-group';
+import UserInfo from '@components/profile/user-info';
+import { ICurrentUserResponse } from '@customTypes/currentUser.types';
+import { useAppDispatch } from '@hooks/useTypedSelector';
+import { Paper } from '@mui/material';
+import { getCurrentUser } from '@service/currentUser.service';
+import { currentUser } from '@store/current-user/currentUser.selector';
 
 const ProfilePage = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
 
     const currentUserState = useSelector(currentUser);
 
@@ -72,221 +60,51 @@ const ProfilePage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUserState]);
 
-    const genderEval = () => {
-        if (currentData.gender === "MAN") {
-            return (
-                <MaleIcon sx={{ fontSize: "xxx-large", color: "#0089fb" }} />
-            );
-        } else if (currentData.gender === "WOMAN") {
-            return (
-                <FemaleIcon sx={{ fontSize: "xxx-large", color: "#ff0090" }} />
-            );
-        }
-    };
-
-    const handleButtonClick = (type: string) => {
-        switch (type) {
-            case "edit":
-                setIsEditable(true);
-                setReadOnly(false);
-                break;
-            case "discard":
-                setIsEditable(false);
-                setReadOnly(true);
-                setEmailError(false);
-                setFields();
-                break;
-            case "save":
-                if (isEmail(email) === null) {
-                    setEmailError(true);
-                } else {
-                    setEmailError(false);
-                    setIsEditable(false);
-                    setReadOnly(true);
-                    dispatch(
-                        updateCurrentUser({
-                            email: email,
-                            username: username,
-                            firstName: firstName,
-                            lastName: lastName,
-                            gender: currentUserState?.gender,
-                            age: currentUserState?.age,
-                            role: currentUserState?.role,
-                        })
-                    );
-                }
-
-                break;
-            default:
-                break;
-        }
-    };
-
-    const handleLogoutClick = () => {
-        dispatch(logout());
-        navigate("/rent");
-    };
-
     return (
         // TODO: Set textfield to disabled when not in edit mode
-        <div className="flex items-center justify-center h-screen max-sm:mt-40">
-            <Navbar />
-            <Paper
-                elevation={8}
-                sx={{
-                    width: "fit-content",
-                    py: 3,
-                    px: 5,
-                    borderRadius: 2,
-                    marginBottom: "150px",
-                    minWidth: "20%",
-                }}
-            >
-                <Grid
-                    container
+        <>
+            <div>
+                <Navbar />
+            </div>
+            <div className="flex items-center justify-center h-screen pt-28 max-sm:mt-40">
+                <Paper
+                    elevation={8}
                     sx={{
-                        justifyContent: "center",
-                        alignContent: "center",
-                        alignItems: "center",
-                    }}
-                    direction="column"
-                >
-                    <Grid item>
-                        <Typography sx={{ fontSize: "24px", fontWeight: 600 }}>
-                            {currentData.firstName} {currentData.lastName}
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography sx={{ fontWeight: 500, fontSize: "16px" }}>
-                            age {currentData.age}
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography sx={{ fontWeight: 300, fontSize: "14px" }}>
-                            Role: {currentData.role}
-                        </Typography>
-                    </Grid>
-                    <Grid item>{genderEval()}</Grid>
-                </Grid>
-                <Grid
-                    container
-                    direction="column"
-                    sx={{
-                        justifyContent: "center",
-                        alignContent: "center",
-                        alignItems: "center",
-                        pt: 5,
+                        width: "fit-content",
+                        py: 3,
+                        px: 5,
+                        borderRadius: 2,
+                        marginBottom: "150px",
+                        minWidth: "20%",
                     }}
                 >
-                    <Grid item sx={{ ...generalStyle, pt: 0 }}>
-                        <TextField
-                            id="email"
-                            label="Email"
-                            value={email}
-                            error={emailError}
-                            helperText={
-                                emailError ? "Invalid email format" : ""
-                            }
-                            InputProps={{
-                                readOnly: readOnly,
-                            }}
-                            fullWidth
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item sx={generalStyle}>
-                        <TextField
-                            id="username"
-                            label="Username"
-                            value={username}
-                            InputProps={{
-                                readOnly: readOnly,
-                            }}
-                            fullWidth
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item sx={generalStyle}>
-                        <TextField
-                            id="firstName"
-                            label="First name"
-                            value={firstName}
-                            InputProps={{
-                                readOnly: readOnly,
-                            }}
-                            fullWidth
-                            onChange={(e) => setFirstName(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item sx={generalStyle}>
-                        <TextField
-                            id="lastName"
-                            label="Last name"
-                            value={lastName}
-                            InputProps={{
-                                readOnly: readOnly,
-                            }}
-                            fullWidth
-                            onChange={(e) => setLastName(e.target.value)}
-                        />
-                    </Grid>
-                </Grid>
-                <Grid
-                    container
-                    sx={{
-                        justifyContent: "center",
-                        alignContent: "center",
-                        alignItems: "center",
-                        pt: 5,
-                    }}
-                >
-                    {!isEditable ? (
-                        <Button
-                            variant="contained"
-                            sx={{ bgcolor: MAIN_COLOR }}
-                            onClick={() => handleButtonClick("edit")}
-                        >
-                            EDIT
-                        </Button>
-                    ) : (
-                        <Grid
-                            container
-                            sx={{ justifyContent: "space-between" }}
-                        >
-                            <Button
-                                variant="contained"
-                                color="success"
-                                sx={{ width: "40%" }}
-                                onClick={() => handleButtonClick("save")}
-                            >
-                                Save
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="error"
-                                sx={{ bgcolor: "red", width: "40%" }}
-                                onClick={() => handleButtonClick("discard")}
-                            >
-                                Discard
-                            </Button>
-                        </Grid>
-                    )}
-                </Grid>
-                <Grid
-                    sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignContent: "center",
-                        alignItems: "center",
-                        pt: 2,
-                    }}
-                >
-                    <Button variant="contained" onClick={handleLogoutClick}>
-                        Logout
-                    </Button>
-                </Grid>
-            </Paper>
-        </div>
+                    <UserInfo currentData={currentData} />
+                    <InputGroup
+                        email={email}
+                        emailError={emailError}
+                        readOnly={readOnly}
+                        setEmail={setEmail}
+                        username={username}
+                        setUsername={setUsername}
+                        firstName={firstName}
+                        setFirstName={setFirstName}
+                        lastName={lastName}
+                        setLastName={setLastName}
+                    />
+                    <ButtonGroup
+                        isEditable={isEditable}
+                        setIsEditable={setIsEditable}
+                        setReadOnly={setReadOnly}
+                        setEmailError={setEmailError}
+                        setFields={setFields}
+                        email={email}
+                        username={username}
+                        firstName={firstName}
+                        lastName={lastName}
+                    />
+                </Paper>
+            </div>
+        </>
     );
 };
 

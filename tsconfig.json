@@ -17,14 +17,14 @@
         "jsx": "react-jsx",
         "paths": {
             "@components/*": ["./src/components/*"],
-            "@constans/*": ["./src/constants/*"],
+            "@constants/*": ["./src/constants/*"],
             "@hooks/*": ["./src/hooks/*"],
             "@pages/*": ["./src/pages/*"],
             "@providers/*": ["./src/providers/*"],
             "@router/*": ["./src/router/*"],
             "@service/*": ["./src/service/*"],
             "@store/*": ["./src/store/*"],
-            "@types/*": ["./src/types/*"],
+            "@customTypes/*": ["./src/types/*"],
             "@utils/*": ["./src/utils/*"]
         }
     },
